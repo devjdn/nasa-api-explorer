@@ -52,7 +52,7 @@ export class NASAClient {
         return await this.fetch<ApodResponse>(
             "/planetary/apod",
             undefined,
-            { revalidate: 86400 } // ISR for 1 day
+            { revalidate: 3600 } // ISR for 1 hour
         );
     }
 

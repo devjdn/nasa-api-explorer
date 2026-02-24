@@ -17,15 +17,18 @@ export default function APODMedia({ alt, url, hdurl, media_type }: ImageProps) {
                     width={1024}
                     height={500}
                     placeholder="blur"
+                    priority
                     blurDataURL={url}
                 />
             ) : media_type === "video" && (
-                <iframe
-                    src={url}
-                    title={alt}
-                    className="absolute inset-0 h-full w-full"
-                    allowFullScreen
-                />
+                <div className="relative w-full aspect-video">
+                    <iframe
+                        src={url}
+                        title={alt}
+                        allowFullScreen
+                        className="absolute inset-0 w-full h-full"
+                    />
+                </div>
             )}
         </div>
     );

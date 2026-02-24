@@ -3,8 +3,9 @@ import APODDetails from "@/components/ui/apod/details";
 import { Separator } from "@/components/ui/separator";
 import APODMedia from "@/components/ui/apod/media";
 
-export default async function APODPage() {
-    const apod = await nasaClient.getTodayAPOD();
+export default async function APODPage({ params }: { params: Promise<{ date: string; }> }) {
+    const { date } = await params;
+    const apod = await nasaClient.getAPODByDate(date);
     console.log(apod);
 
     return (
