@@ -5,7 +5,7 @@ import APODMedia from "@/components/ui/apod/media";
 
 export default async function APODPage() {
     const apod = await nasaClient.getTodayAPOD();
-    console.log(apod);
+    // console.log(apod);
 
     return (
         <div className="space-y-8 @container w-full max-w-5xl mx-auto px-3 lg:px-0">

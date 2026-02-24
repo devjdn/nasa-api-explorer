@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
       {
         hostname: "apod.nasa.gov",
         protocol: "https",
+      },
+      {
+        hostname: "epic.gsfc.nasa.gov",
+        protocol: "https",
       }
     ]
   }

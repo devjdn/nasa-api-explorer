@@ -36,7 +36,7 @@ export default function Header() {
         <header className="sticky top-0 lg:grid lg:grid-cols-[auto_1fr_240px] not-dark:bg-black dark:bg-background not-dark:text-primary-foreground">
             <div className="justify-self-start place-self-center">
                 <Link className="group" href={"/"}>
-                    <div className="group-hover:bg-orange-600 dark:group-hover:bg-orange-500 text-white transition-colors px-4 lg:px-8 py-3">
+                    <div className="group-hover:bg-orange-600 dark:group-hover:bg-orange-500 text-white transition-colors px-3 lg:px-8 py-3">
                         <p className="text-sm font-semibold">
                             NASA API Explorer{" "}
                             <span className="text-orange-600 dark:text-orange-500 group-hover:text-black dark:group-hover:text-black transition-colors">1.0</span>
@@ -49,8 +49,8 @@ export default function Header() {
                 <ul className="flex font-mono text-sm">
                     {NASA_APIS.map((api, i) => (
                         <li key={api.href}>
-                            {i > 0 ? (
-                                <div className="hover:bg-neutral-700 text-white transition-colors py-3 px-4">
+                            {i > 1 ? (
+                                <div className="hover:bg-neutral-700 text-white transition-colors py-3 px-3">
                                     <span>{api.shortName}</span>
                                 </div>
                             ) : (
@@ -58,7 +58,7 @@ export default function Header() {
                                     href={api.href}
                                     className="group"
                                 >
-                                    <div className="group-hover:bg-orange-500 text-white transition-colors py-3 px-4">
+                                    <div className="group-hover:bg-orange-500 text-white transition-colors py-3 px-3">
                                         <span>{api.shortName}</span>
                                     </div>
                                 </Link>
@@ -67,7 +67,7 @@ export default function Header() {
                     ))}
                 </ul>
             </nav>
-            <div className="place-self-end">
+            <div className="place-self-end hidden lg:block">
                 <ThemeSwitcher />
             </div>
         </header>
