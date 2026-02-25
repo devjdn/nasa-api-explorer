@@ -2,8 +2,11 @@
 
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
+import MobileNav from "./mobile-nav";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-const NASA_APIS = [
+export const NASA_APIS = [
     {
         name: "Astronomy Picture of the Day",
         shortName: "APOD",
@@ -32,14 +35,15 @@ const NASA_APIS = [
 ];
 
 export default function Header() {
+    const pathname = usePathname();
     return (
-        <header className="sticky top-0 lg:grid lg:grid-cols-[auto_1fr_240px] not-dark:bg-black dark:bg-background not-dark:text-primary-foreground">
+        <header className="sticky top-0 flex justify-between items-center z-50 lg:grid lg:grid-cols-[auto_1fr_240px] dark:border-b dark:border-b-border not-dark:bg-primary dark:bg-background not-dark:text-primary-foreground">
             <div className="justify-self-start place-self-center">
                 <Link className="group" href={"/"}>
-                    <div className="group-hover:bg-orange-600 dark:group-hover:bg-orange-500 text-white transition-colors px-3 lg:px-8 py-3">
+                    <div className="text-white px-3 lg:px-8 py-3">
                         <p className="text-sm font-semibold">
                             NASA API Explorer{" "}
-                            <span className="text-orange-600 dark:text-orange-500 group-hover:text-black dark:group-hover:text-black transition-colors">1.0</span>
+                            <span className="text-orange-500">1.0</span>
                         </p>
                     </div>
                 </Link>
@@ -58,7 +62,10 @@ export default function Header() {
                                     href={api.href}
                                     className="group"
                                 >
-                                    <div className="group-hover:bg-orange-500 text-white transition-colors py-3 px-3">
+                                    <div className={cn(
+                                        "transition-colors p-3 group-hover:bg-orange-500 text-white",
+                                        pathname.includes(api.href) && "text-orange-500 hover:text-white"
+                                    )}>
                                         <span>{api.shortName}</span>
                                     </div>
                                 </Link>
@@ -67,8 +74,11 @@ export default function Header() {
                     ))}
                 </ul>
             </nav>
-            <div className="place-self-end hidden lg:block">
+            <div className="justify-self-end hidden h-full lg:block">
                 <ThemeSwitcher />
+            </div>
+            <div className="justify-self-end block lg:hidden">
+                <MobileNav />
             </div>
         </header>
     );

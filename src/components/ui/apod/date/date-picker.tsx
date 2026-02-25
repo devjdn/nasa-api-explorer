@@ -48,7 +48,7 @@ export function DatePickerForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="fixed bottom-2 lg:bottom-8 left-1/2 -translate-x-1/2 z-50 rounded-xl bg-secondary/80 backdrop-blur-lg border border-border/80 p-2 pl-4 flex items-center gap-2 shadow-xl"
+                className="fixed bottom-2 lg:bottom-8 left-1/2 -translate-x-1/2 z-20 rounded-xl bg-secondary/80 backdrop-blur-lg border border-border/80 p-2 pl-4 flex items-center gap-2 shadow-xl"
             >
                 <div className="">
                     <FormField
@@ -76,7 +76,7 @@ export function DatePickerForm() {
                                         </FormControl>
                                     </PopoverTrigger>
                                     <PopoverContent
-                                        className="w-auto p-0 rounded-xl"
+                                        className="w-auto p-0 rounded-none"
                                         sideOffset={24}
                                         side="top"
                                         align="start"

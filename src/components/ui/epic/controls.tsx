@@ -42,6 +42,9 @@ export default function EPICControls({ currentType, currentDate, availableDates 
     const timestamps = availableDates.map(
         (d) => new Date(d).getTime()
     );
+    const availableDateSet = new Set(
+        availableDates.map((d) => format(new Date(d), "yyyy-MM-dd"))
+    );
 
     const MIN_DATE = new Date(Math.min(...timestamps));
     const MAX_DATE = new Date(Math.max(...timestamps));
@@ -62,9 +65,9 @@ export default function EPICControls({ currentType, currentDate, availableDates 
                             key={type}
                             onClick={() => handleTypeChange(type)}
                             className={cn(
-                                "capitalize text-sm font-mono h-8 px-3 grid place-items-center text-center cursor-pointer",
-                                { "bg-orange-600 dark:bg-orange-500 text-primary-foreground dark:text-white": type === currentType },
-                                { "hover:bg-secondary transition-colors border": type !== currentType }
+                                "capitalize text-sm font-mono h-8 px-3 grid place-items-center text-center cursor-pointer border",
+                                { "bg-orange-600 dark:bg-orange-500 text-primary-foreground dark:text-white border-transparent": type === currentType },
+                                { "hover:bg-secondary transition-colors border-border": type !== currentType }
                             )}
                         >
                             {type}
@@ -108,9 +111,15 @@ export default function EPICControls({ currentType, currentDate, availableDates 
                             captionLayout="dropdown"
                             startMonth={MIN_DATE}
                             endMonth={MAX_DATE}
-                            disabled={(date) =>
-                                date > MAX_DATE || date < MIN_DATE
-                            }
+                            disabled={(date) => {
+                                const formatted = format(date, "yyyy-MM-dd");
+
+                                return (
+                                    date < MIN_DATE ||
+                                    date > MAX_DATE ||
+                                    !availableDateSet.has(formatted)
+                                );
+                            }}
                         />
                     </PopoverContent>
                 </Popover>

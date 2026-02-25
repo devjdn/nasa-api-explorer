@@ -3,6 +3,7 @@ import { Inter, Inter_Tight, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/header/header";
 import { ThemeProvider } from "next-themes";
+import Footer from "@/components/ui/footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,13 +33,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${interTight.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${interTight.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
-          <main className="py-8">
+          <main className="py-8 flex-1">
             {children}
           </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
