@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Calendar03Icon } from "@hugeicons/core-free-icons";
 import { Calendar } from "../calendar";
+import InfoTooltip from "../info-tooltip";
 
 type ControlsProps = {
     currentType: EpicImageType;
@@ -76,9 +77,14 @@ export default function EPICControls({ currentType, currentDate, availableDates 
                 </div>
             </div>
             <div className="space-y-2">
-                <p className="text-sm font-mono text-muted-foreground">
-                    Date
-                </p>
+                <div className="flex gap-2 items-center">
+                    <div>
+                        <p className="text-sm font-mono text-muted-foreground">
+                            Date
+                        </p>
+                    </div>
+                    <InfoTooltip title="EPIC Date Picker" info="This date picker defaults to the most recent available date for photos from this API. Greyed out dates means there are no photos on that day." iconSize={16} />
+                </div>
 
                 <Popover>
                     <PopoverTrigger asChild>

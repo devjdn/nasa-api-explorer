@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/ui/header/header";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/ui/footer";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,11 +37,13 @@ export default function RootLayout({
         className={`${inter.variable} ${interTight.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <main className="py-8 flex-1">
-            {children}
-          </main>
-          <Footer />
+          <TooltipProvider>
+            <Header />
+            <main className="py-8 flex-1">
+              {children}
+            </main>
+            <Footer />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
