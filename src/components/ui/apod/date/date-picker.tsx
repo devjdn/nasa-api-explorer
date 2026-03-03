@@ -21,7 +21,7 @@ import { useTransition } from "react";
 
 const FormSchema = z.object({
     date: z.date({
-        error: "A date after June 16, 1995 is required",
+        error: "A date from June 16, 1995 and onwards is required",
     }),
 });
 
@@ -33,22 +33,21 @@ export function DatePickerForm() {
     });
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        const bstDate = toZonedTime(data.date, "Europe/London");
-        const formattedDate = format(bstDate, "yyyy-MM-dd");
+        const formattedDate = format(data.date, "yyyy-MM-dd");
 
         startTransition(() => {
             router.push(`/apod/${formattedDate}`);
         });
     }
 
-    const MIN_DATE = new Date(1995, 5);
+    const MIN_DATE = new Date(1995, 5, 16);
     const MAX_DATE = new Date();
 
     return (
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="fixed bottom-2 lg:bottom-8 left-1/2 -translate-x-1/2 z-20 rounded-xl bg-secondary/80 backdrop-blur-lg border border-border/80 p-2 pl-4 flex items-center gap-2 shadow-xl"
+                className="bg-secondary border border-border/80 p-2 pl-4 flex items-center gap-2 shadow-xl"
             >
                 <div className="">
                     <FormField
@@ -89,7 +88,7 @@ export function DatePickerForm() {
                                             startMonth={MIN_DATE}
                                             endMonth={MAX_DATE}
                                             disabled={(date) =>
-                                                date > MAX_DATE || date < new Date("1995-06-16")
+                                                date > MAX_DATE || date < MIN_DATE
                                             }
                                         />
                                     </PopoverContent>
@@ -104,6 +103,7 @@ export function DatePickerForm() {
                     variant="default"
                     type="submit"
                     disabled={isPending}
+                    className="rounded-none cursor-pointer"
                 >
                     {isPending ? (
                         <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />

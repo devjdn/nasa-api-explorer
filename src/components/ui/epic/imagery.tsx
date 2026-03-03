@@ -74,7 +74,7 @@ export default function EPICImagery({ images, type }: EPICImageryProps) {
                     layout === "default" &&
                     "gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
                     layout === "lg" &&
-                    "gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+                    "gap-3 gap-y-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
                 )}
             >
                 {images.map((image) => {
@@ -100,8 +100,7 @@ export default function EPICImagery({ images, type }: EPICImageryProps) {
                                 />
                             </div>
 
-                            <div className="text-sm text-muted-foreground">
-                                <p>{format(dateObj, "PPP")}</p>
+                            <div className="text-sm text-muted-foreground font-mono">
                                 <p>{format(dateObj, "HH:mm:ss 'UTC'")}</p>
                             </div>
                         </div>

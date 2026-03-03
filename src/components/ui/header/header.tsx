@@ -37,7 +37,7 @@ export const NASA_APIS = [
 export default function Header() {
     const pathname = usePathname();
     return (
-        <header className="sticky top-0 flex justify-between items-center z-50 lg:grid lg:grid-cols-[auto_1fr_240px] dark:border-b dark:border-b-border not-dark:bg-primary dark:bg-background not-dark:text-primary-foreground">
+        <header className="sticky top-0 flex justify-between items-center z-50 lg:grid lg:grid-cols-[auto_1fr_240px] not-dark:bg-primary dark:bg-background not-dark:text-primary-foreground">
             <div className="justify-self-start place-self-center">
                 <Link className="group" href={"/"}>
                     <div className="text-white px-3 lg:px-8 py-3">

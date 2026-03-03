@@ -5,11 +5,18 @@ type ImageProps = {
     url: string;
     hdurl?: string;
     media_type: "image" | "video";
-}
+};
 
-export default function APODMedia({ alt, url, hdurl, media_type }: ImageProps) {
+export default function APODMedia({
+    alt,
+    url,
+    hdurl,
+    media_type,
+}: ImageProps) {
+    const isDirectVideo = /\.(mp4|webm|mov)$/i.test(url);
+
     return (
-        <div className="w-full">
+        <div className="w-full bg-secondary">
             {media_type === "image" ? (
                 <Image
                     src={hdurl ?? url}
@@ -17,17 +24,29 @@ export default function APODMedia({ alt, url, hdurl, media_type }: ImageProps) {
                     width={1024}
                     height={500}
                     placeholder="blur"
-                    priority
+                    fetchPriority="high"
                     blurDataURL={url}
+                    unoptimized
                 />
             ) : media_type === "video" && (
                 <div className="relative w-full aspect-video">
-                    <iframe
-                        src={url}
-                        title={alt}
-                        allowFullScreen
-                        className="absolute inset-0 w-full h-full"
-                    />
+                    {isDirectVideo ? (
+                        <video
+                            controls
+                            className="absolute inset-0 w-full h-full"
+                            preload="metadata"
+                        >
+                            <source src={url} type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    ) : (
+                        <iframe
+                            src={url}
+                            title={alt}
+                            allowFullScreen
+                            className="absolute inset-0 w-full h-full"
+                        />
+                    )}
                 </div>
             )}
         </div>

@@ -2,10 +2,11 @@ import { nasaClient } from "@/lib/nasa/client";
 import APODDetails from "@/components/ui/apod/details";
 import { Separator } from "@/components/ui/separator";
 import APODMedia from "@/components/ui/apod/media";
+import { notFound } from "next/navigation";
 
-export default async function APODPage({ params }: { params: Promise<{ date: string; }> }) {
-    const { date } = await params;
-    const apod = await nasaClient.getAPODByDate(date);
+export default async function APODPage() {
+    const apod = await nasaClient.getTodayAPOD();
+    if (!apod) notFound();
     // console.log(apod);
 
     return (

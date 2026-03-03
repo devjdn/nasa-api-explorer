@@ -12,7 +12,7 @@ type DetailsProps = {
 export default function APODDetails({ copyright, date, media_type }: DetailsProps) {
 
     return (
-        <div className="inline-flex gap-3 flex-wrap text-sm text-muted-foreground [&_svg]:stroke-muted-foreground leading-tight">
+        <div className="inline-flex gap-3 flex-wrap text-sm text-muted-foreground font-mono [&_svg]:stroke-muted-foreground leading-tight">
             <div className="inline-flex items-center gap-1">
                 {media_type === "image" ? (
                     <>
