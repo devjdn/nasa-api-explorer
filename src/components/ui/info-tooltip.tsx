@@ -13,7 +13,7 @@ type InfoTooltipProps = {
 }
 
 export default function InfoTooltip({ title, info, iconSize }: InfoTooltipProps) {
-    const isSmall = useMediaQuery("only screen and (max-width : 1024px");
+    const isSmall = useMediaQuery("only screen and (max-width : 1024px)");
 
     return (
         <>

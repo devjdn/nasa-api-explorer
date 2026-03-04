@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+import { NASA_APIS } from "@/lib/nasa-apis";
 
 export default function Footer() {
     return (
@@ -23,21 +24,11 @@ export default function Footer() {
                             Explore
                         </h3>
                         <div className="flex flex-col gap-2 font-mono text-sm">
-                            <Link href="/apod" className="hover:text-orange-500 transition-colors">
-                                APOD
-                            </Link>
-                            <Link href="/epic" className="hover:text-orange-500 transition-colors">
-                                EPIC
-                            </Link>
-                            <Link href="/neos" className="hover:text-orange-500 transition-colors">
-                                Near-Earth Objects
-                            </Link>
-                            <Link href="/media-library" className="hover:text-orange-500 transition-colors">
-                                Media Library
-                            </Link>
-                            <Link href="/techtransfer" className="hover:text-orange-500 transition-colors">
-                                Tech Transfer
-                            </Link>
+                            {NASA_APIS.map((l, i) => (
+                                <Link key={i} href={l.href} className="hover:text-orange-500 transition-colors">
+                                    {l.name}
+                                </Link>
+                            ))}
                         </div>
                     </div>
 

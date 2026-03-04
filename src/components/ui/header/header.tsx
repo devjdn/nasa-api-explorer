@@ -5,34 +5,7 @@ import { ThemeSwitcher } from "./theme-switcher";
 import MobileNav from "./mobile-nav";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-
-export const NASA_APIS = [
-    {
-        name: "Astronomy Picture of the Day",
-        shortName: "APOD",
-        href: "/apod",
-    },
-    {
-        name: "EPIC Earth Imagery",
-        shortName: "EPIC",
-        href: "/epic",
-    },
-    {
-        name: "Near Earth Objects",
-        shortName: "NEOs",
-        href: "/near-earth-objects",
-    },
-    {
-        name: "Image & Video Library",
-        shortName: "Media Library",
-        href: "/media-library",
-    },
-    {
-        name: "TechTransfer Patents",
-        shortName: "TechTransfer",
-        href: "/techtransfer",
-    },
-];
+import { NASA_APIS } from "@/lib/nasa-apis";
 
 export default function Header() {
     const pathname = usePathname();
@@ -53,7 +26,7 @@ export default function Header() {
                 <ul className="flex font-mono text-sm">
                     {NASA_APIS.map((api, i) => (
                         <li key={api.href}>
-                            {i > 1 ? (
+                            {i > 2 ? (
                                 <div className="hover:bg-neutral-700 text-white transition-colors py-3 px-3">
                                     <span>{api.shortName}</span>
                                 </div>

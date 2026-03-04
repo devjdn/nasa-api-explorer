@@ -4,7 +4,7 @@ import { useState } from "react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu09Icon, X } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
-import { NASA_APIS } from "./header";
+import { NASA_APIS } from "@/lib/nasa-apis";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeSwitcher } from "./theme-switcher";

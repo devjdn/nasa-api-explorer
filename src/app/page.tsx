@@ -8,7 +8,7 @@ export default function Home() {
 		<div className="flex-1 space-y-24 pb-24">
 			<section className="py-24 px-3 lg:px-8 not-dark:bg-secondary border-b">
 				<div className="max-w-prose space-y-8">
-					<h1 className="font-display font-semibold text-primary text-3xl lg:text-5xl text-balance leading-tight">
+					<h1 className="font-display font-semibold text-primary text-3xl lg:text-5xl text-balance leading-[1.1]">
 						Beyond <span className="text-orange-500">the stars</span>, <br /> and closer to <span className="text-orange-500">home</span>.
 					</h1>
 					<div className="space-y-6 text-muted-foreground">

@@ -1,4 +1,4 @@
-import type { ApodResponse } from "./types";
+import type { ApodResponse, NeoObject, NeoWsFeedResponse } from "./types";
 
 const NASA_BASE_URL = "https://api.nasa.gov";
 const NASA_API_KEY = process.env.NASA_API_KEY!;
@@ -61,6 +61,24 @@ export class NASAClient {
             "/planetary/apod",
             { date }
         )
+    }
+
+    /**
+     * NeoWs
+     */
+
+
+    async getNeosByDate(date: string): Promise<NeoObject[]> {
+        const data = await this.fetch<NeoWsFeedResponse>(
+            "/neo/rest/v1/feed",
+            {
+                start_date: date,
+                end_date: date,
+            },
+            { revalidate: 3600 } // cache 1 hour
+        );
+
+        return data.near_earth_objects[date] ?? [];
     }
 }
 

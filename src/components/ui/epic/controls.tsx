@@ -2,14 +2,13 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Popover, PopoverTrigger, PopoverContent } from "../popover";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { EPIC_IMAGE_TYPES, type EpicImageType } from "@/lib/EPIC/types";
 import { format } from "date-fns";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Calendar03Icon } from "@hugeicons/core-free-icons";
 import { Calendar } from "../calendar";
-import InfoTooltip from "../info-tooltip";
+// import InfoTooltip from "../info-tooltip";
 
 type ControlsProps = {
     currentType: EpicImageType;
@@ -83,7 +82,7 @@ export default function EPICControls({ currentType, currentDate, availableDates 
                             Date
                         </p>
                     </div>
-                    <InfoTooltip title="EPIC Date Picker" info="This date picker defaults to the most recent available date for photos from this API. Greyed out dates means there are no photos on that day." iconSize={16} />
+                    {/* <InfoTooltip title="EPIC Date Picker" info="This date picker defaults to the most recent available date for photos from this API. Greyed out dates means there are no photos on that day." iconSize={16} /> */}
                 </div>
 
                 <Popover>
