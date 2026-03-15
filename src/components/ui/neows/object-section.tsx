@@ -13,6 +13,7 @@ import {
     CircleDot,
     Circle
 } from "lucide-react";
+import { parse } from "date-fns";
 
 type SortOption =
     | "time-asc"
@@ -47,8 +48,16 @@ export default function ObjectSection({ neo }: { neo: NeoObject[] }) {
             const aApproach = a.close_approach_data[0];
             const bApproach = b.close_approach_data[0];
 
-            const aTime = new Date(aApproach.close_approach_date_full).getTime();
-            const bTime = new Date(bApproach.close_approach_date_full).getTime();
+            const aTime = parse(
+                aApproach.close_approach_date_full,
+                "yyyy-MMM-dd HH:mm",
+                new Date()
+            ).getTime();
+            const bTime = parse(
+                bApproach.close_approach_date_full,
+                "yyyy-MMM-dd HH:mm",
+                new Date()
+            ).getTime();
 
             const aDiameter = (a.estimated_diameter.meters.estimated_diameter_min + a.estimated_diameter.meters.estimated_diameter_max) / 2;
             const bDiameter = (b.estimated_diameter.meters.estimated_diameter_min + b.estimated_diameter.meters.estimated_diameter_max) / 2;

@@ -47,7 +47,7 @@ export default function Header() {
                     ))}
                 </ul>
             </nav>
-            <div className="justify-self-end self-center hidden lg:block">
+            <div className="justify-self-stretch self-center hidden lg:block">
                 <ThemeSwitcher />
             </div>
             <div className="justify-self-end block lg:hidden">
