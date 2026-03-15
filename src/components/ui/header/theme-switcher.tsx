@@ -27,17 +27,17 @@ export function ThemeSwitcher() {
 
     if (!mounted) {
         return (
-            <div className="grid grid-cols-3 p-1 gap-1 border bg-secondary corner-caps relative">
+            <div className="grid grid-cols-3 p-1 gap-1 bg-secondary border relative corner-caps">
                 {THEMES.map(({ value, icon }) => (
                     <div
                         key={value}
                         className={cn(
-                            "relative font-mono uppercase h-6 px-1 text-center flex gap-1 items-center cursor-pointer"
+                            "relative font-mono uppercase h-6 px-1 text-center grid place-items-center cursor-pointer"
                         )}
                     >
                         <p
                             className={cn(
-                                "uppercase text-xs font-mono",
+                                "uppercase text-xs z-11 font-mono align-self-center",
                             )}
                         >
                             {value}
