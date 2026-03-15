@@ -9,11 +9,11 @@ type StatProps = {
 export default function Stat({ label, stat, className }: StatProps) {
     return (
         <div className={cn(
-            "border bg-card px-4 py-3 space-y-1",
+            "border bg-card px-4 py-3 space-y-1 relative",
             className
         )}>
-            <p className="text-xs md:text-sm text-muted-foreground">{label}</p>
-            <p className="text-lg md:text-xl font-mono font-semibold">{stat}</p>
+            <p className="text-xs text-muted-foreground uppercase font-mono">{label}</p>
+            <p className="text-base md:text-xl font-mono font-medium">{stat}</p>
         </div>
     );
 }

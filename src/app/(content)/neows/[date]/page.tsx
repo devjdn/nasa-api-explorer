@@ -2,13 +2,22 @@ import { nasaClient } from "@/lib/nasa/client";
 import { Separator } from "@/components/ui/separator";
 import Stat from "@/components/ui/stat";
 import { SectionTitle } from "@/components/ui/typography";
+import { format } from "date-fns";
 import ObjectGrid from "@/components/ui/neows/objects-grid";
 import ObjectSection from "@/components/ui/neows/object-section";
 
-export default async function NeoWsPage() {
-    const date = new Date().toISOString().split("T")[0]
+type NeoWsDatePageProps = {
+    params: Promise<{
+        date: string;
+    }>;
+}
+
+export default async function NeoWsPage({ params }: NeoWsDatePageProps) {
+    const { date } = await params;
     const neo = await nasaClient.getNeosByDate(date);
     // console.log(neo)
+
+    const formattedDate = format(new Date(date), "do MMMM yyyy")
 
     const hazardousCount = neo.filter((n) => n.is_potentially_hazardous_asteroid).length;
     const largestObject = neo.reduce(
@@ -38,7 +47,7 @@ export default async function NeoWsPage() {
 
             <section className="space-y-6 px-3 lg:px-8">
                 <div>
-                    <SectionTitle>Today&apos;s Overview</SectionTitle>
+                    <SectionTitle>{formattedDate}</SectionTitle>
                 </div>
                 <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">
                     <Stat className="corner-caps" label="Objects Detected" stat={neo.length} />

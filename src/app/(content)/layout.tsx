@@ -4,7 +4,7 @@ export default function ContentLayout({
     children: React.ReactNode;
 }) {
     return (
-        <main className="py-8 flex-1 flex flex-col">
+        <main className="flex-1 flex flex-col border-x">
             {children}
         </main>
     );

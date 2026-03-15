@@ -10,12 +10,12 @@ import { NASA_APIS } from "@/lib/nasa-apis";
 export default function Header() {
     const pathname = usePathname();
     return (
-        <header className="sticky top-0 flex justify-between items-center z-50 lg:grid lg:grid-cols-[auto_1fr_240px] not-dark:bg-primary dark:bg-background not-dark:text-primary-foreground">
+        <header className="sticky top-0 flex justify-between items-center z-50 px-3 lg:px-8 h-14 lg:grid lg:grid-cols-[180px_1fr_180px] bg-background border-b">
             <div className="justify-self-start place-self-center">
                 <Link className="group" href={"/"}>
-                    <div className="text-white px-3 lg:px-8 py-3">
-                        <p className="text-sm font-semibold">
-                            NASA API Explorer{" "}
+                    <div className="">
+                        <p className="text-xl font-display font-semibold">
+                            Stargazer{" "}
                             <span className="text-orange-500">1.0</span>
                         </p>
                     </div>
@@ -23,11 +23,11 @@ export default function Header() {
             </div>
 
             <nav className="hidden lg:flex place-self-center">
-                <ul className="flex font-mono text-sm">
+                <ul className="flex gap-6">
                     {NASA_APIS.map((api, i) => (
-                        <li key={api.href}>
+                        <li className="font-mono w-fit" key={api.href}>
                             {i > 2 ? (
-                                <div className="hover:bg-neutral-700 text-white transition-colors py-3 px-3">
+                                <div className="text-neutral-700 cursor-not-allowed">
                                     <span>{api.shortName}</span>
                                 </div>
                             ) : (
@@ -36,8 +36,8 @@ export default function Header() {
                                     className="group"
                                 >
                                     <div className={cn(
-                                        "transition-colors p-3 group-hover:bg-orange-500 text-white",
-                                        pathname.includes(api.href) && "text-orange-500 hover:text-white"
+                                        "transition-colors hover:text-orange-500",
+                                        pathname.includes(api.href) && "text-orange-500"
                                     )}>
                                         <span>{api.shortName}</span>
                                     </div>
@@ -47,7 +47,7 @@ export default function Header() {
                     ))}
                 </ul>
             </nav>
-            <div className="justify-self-end hidden h-full lg:block">
+            <div className="justify-self-end self-center hidden lg:block">
                 <ThemeSwitcher />
             </div>
             <div className="justify-self-end block lg:hidden">

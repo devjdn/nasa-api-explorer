@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight, IBM_Plex_Mono } from "next/font/google";
+import { GeistPixelCircle } from "geist/font/pixel";
 import "./globals.css";
 import Header from "@/components/ui/header/header";
 import { ThemeProvider } from "next-themes";
@@ -19,7 +20,7 @@ const interTight = Inter_Tight({
 const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -35,12 +36,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${interTight.variable} ${ibmPlexMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} ${interTight.variable} ${ibmPlexMono.variable} ${GeistPixelCircle.variable} antialiased min-h-screen flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TooltipProvider>
             <Header />
-            {children}
+            <div className="px-3 lg:px-8 *:py-8 flex-1 *:border-x">
+              {children}
+            </div>
             <Footer />
           </TooltipProvider>
         </ThemeProvider>

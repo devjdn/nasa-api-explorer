@@ -56,7 +56,7 @@ export default function EPICControls({ currentType, currentDate, availableDates 
     return (
         <div className="flex flex-col gap-6 lg:gap-12 lg:flex-row lg:items-center">
             <div className="space-y-2">
-                <p className="text-sm font-mono text-muted-foreground">
+                <p className="text-xs font-mono uppercase text-muted-foreground">
                     Image Type
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -65,7 +65,7 @@ export default function EPICControls({ currentType, currentDate, availableDates 
                             key={type}
                             onClick={() => handleTypeChange(type)}
                             className={cn(
-                                "capitalize text-sm font-mono h-8 px-3 grid place-items-center text-center cursor-pointer border",
+                                "text-sm font-mono uppercase h-8 px-3 grid place-items-center text-center cursor-pointer border",
                                 { "bg-orange-600 dark:bg-orange-500 text-primary-foreground dark:text-white border-transparent": type === currentType },
                                 { "hover:bg-secondary transition-colors border-border": type !== currentType }
                             )}
@@ -78,7 +78,7 @@ export default function EPICControls({ currentType, currentDate, availableDates 
             <div className="space-y-2">
                 <div className="flex gap-2 items-center">
                     <div>
-                        <p className="text-sm font-mono text-muted-foreground">
+                        <p className="text-xs font-mono uppercase text-muted-foreground">
                             Date
                         </p>
                     </div>

@@ -28,10 +28,10 @@ export default function EPICImagery({ images, type }: EPICImageryProps) {
     }
 
     return (
-        <div className="space-y-3">
+        <div className="space-y-3 px-3 lg:px-8">
             <div className="flex items-center justify-between gap-4">
                 <div>
-                    <p className="font-medium">{images.length} Images</p>
+                    <p className="font-medium font-mono uppercase">{images.length} Images</p>
                 </div>
                 <div className="flex gap-2 items-center">
                     <button
@@ -68,13 +68,13 @@ export default function EPICImagery({ images, type }: EPICImageryProps) {
             </div>
             <div
                 className={cn(
-                    "grid",
+                    "grid gap-x-2",
                     layout === "sm" &&
-                    "gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3",
+                    "gap-y-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3",
                     layout === "default" &&
-                    "gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+                    "gap-y-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
                     layout === "lg" &&
-                    "gap-3 gap-y-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+                    "gapx-2 gap-y-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
                 )}
             >
                 {images.map((image) => {

@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { HugeiconsIcon } from "@hugeicons/react";
 import {
     ComputerIcon,
     Moon02Icon,
     Sun03Icon,
 } from "@hugeicons/core-free-icons";
 import { cn } from "@/lib/utils";
+import { motion } from "motion/react";
 
 const THEMES = [
     { value: "light", icon: Sun03Icon },
@@ -27,13 +27,21 @@ export function ThemeSwitcher() {
 
     if (!mounted) {
         return (
-            <div className="grid grid-cols-3 h-full">
+            <div className="grid grid-cols-3 p-1 gap-1 border bg-secondary corner-caps relative">
                 {THEMES.map(({ value, icon }) => (
                     <div
                         key={value}
-                        className="flex items-center justify-center px-3"
+                        className={cn(
+                            "relative font-mono uppercase h-6 px-1 text-center flex gap-1 items-center cursor-pointer"
+                        )}
                     >
-                        <HugeiconsIcon size={16} icon={icon} />
+                        <p
+                            className={cn(
+                                "uppercase text-xs font-mono",
+                            )}
+                        >
+                            {value}
+                        </p>
                     </div>
                 ))}
             </div>
@@ -41,28 +49,38 @@ export function ThemeSwitcher() {
     }
 
     return (
-        <div
-            className="grid grid-cols-3 h-full"
-            role="tablist"
-            aria-label="Theme switcher"
-        >
+        <div className="grid grid-cols-3 p-1 gap-1 bg-secondary border relative corner-caps">
             {THEMES.map(({ value, icon }) => {
                 const isActive = theme === value;
 
                 return (
                     <button
                         key={value}
-                        type="button"
-                        role="tab"
-                        aria-selected={isActive}
                         onClick={() => setTheme(value)}
                         className={cn(
-                            "flex items-center justify-center p-3 transition-colors",
-                            !isActive && "hover:bg-neutral-700",
-                            isActive && "bg-orange-500 text-white font-medium"
+                            "relative font-mono uppercase h-6 px-1 text-center grid place-items-center cursor-pointer"
                         )}
                     >
-                        <HugeiconsIcon size={16} icon={icon} />
+                        {isActive && (
+                            <motion.div
+                                layoutId="theme-pill"
+                                className="absolute inset-0 bg-orange-500"
+                                transition={{
+                                    type: "tween",
+                                    stiffness: 500,
+                                    damping: 40,
+                                }}
+                            />
+                        )}
+
+                        <p
+                            className={cn(
+                                "uppercase text-xs z-11 font-mono align-self-center",
+                                isActive && "text-white"
+                            )}
+                        >
+                            {value}
+                        </p>
                     </button>
                 );
             })}

@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { EPIC_IMAGE_TYPES, type EpicImageType } from "@/lib/EPIC/types";
 import EPICControls from "@/components/ui/epic/controls";
 import EPICImagery from "@/components/ui/epic/imagery";
+import { PageEyebrow, PageTitle } from "@/components/ui/typography";
 
 type EpicPageProps = {
     searchParams: Promise<{
@@ -26,8 +27,8 @@ export default async function EPICPage({ searchParams }: EpicPageProps) {
 
     let latestTimestamp = -Infinity;
 
-    for (const d of availableDates) {
-        const time = new Date(d).getTime();
+    for (const date of availableDates) {
+        const time = new Date(date).getTime();
         if (time > latestTimestamp) latestTimestamp = time;
     }
 
@@ -48,15 +49,11 @@ export default async function EPICPage({ searchParams }: EpicPageProps) {
     // console.log(images)
 
     return (
-        <div className="space-y-8 @container w-full px-3 lg:px-8">
-            <div className="space-y-12">
+        <div className="space-y-8 @container w-full">
+            <div className="space-y-12 px-3 lg:px-8">
                 <div className="space-y-6">
-                    <p className="font-medium text-orange-600 dark:text-orange-500 text-sm lg:text-base">
-                        EPIC
-                    </p>
-                    <h1 className="font-display font-semibold text-3xl lg:text-4xl supports-text-pretty:text-pretty text-balance">
-                        Earth Polychromatic Imaging Camera
-                    </h1>
+                    <PageEyebrow>EPIC</PageEyebrow>
+                    <PageTitle>Earth Polychromatic Imaging Camera</PageTitle>
                 </div>
 
                 <EPICControls
@@ -68,7 +65,6 @@ export default async function EPICPage({ searchParams }: EpicPageProps) {
 
             <Separator />
 
-            {/* Image grid goes here */}
             <EPICImagery images={images} type={type} />
         </div>
     );

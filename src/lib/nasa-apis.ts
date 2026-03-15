@@ -14,15 +14,15 @@ export const NASA_APIS = [
         shortName: "NeoWs",
         href: "/neows",
     },
-    {
-        name: "Image & Video Library",
-        shortName: "Media Library",
-        href: "/media-library",
-    },
-    {
-        name: "TechTransfer Patents",
-        shortName: "TechTransfer",
-        href: "/techtransfer",
-    },
+    // {
+    //     name: "Image & Video Library",
+    //     shortName: "Media Library",
+    //     href: "/media-library",
+    // },
+    // {
+    //     name: "TechTransfer Patents",
+    //     shortName: "TechTransfer",
+    //     href: "/techtransfer",
+    // },
 ];
 

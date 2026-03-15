@@ -9,6 +9,9 @@ import { NeoObject } from "@/lib/nasa/types";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Plus } from "@hugeicons/core-free-icons";
 import { motion, AnimatePresence } from "motion/react"
+import { format } from "date-fns-tz";
+import AsteroidSizeChart from "./asteroid-size-chart";
+import { parse } from "date-fns";
 
 type AsteroidCardProps = {
     neo: NeoObject;
@@ -28,18 +31,16 @@ export function AsteroidCard({
     const [overlayOpen, setOverlayOpen] = useState(false);
 
     return (
-        <Card className={cn(
-            "relative overflow-hidden",
-        )}>
-            <CardHeader className="flex items-start justify-between gap-4">
-                <div className="space-y-1">
-                    <CardTitle>{neo.name}</CardTitle>
-                    <CardDescription>{`ID ${neo.id}`}</CardDescription>
+        <Card>
+            <CardHeader className="flex flex-col md:flex-row items-start justify-between gap-8">
+                <div className="space-y-1 flex-1 min-w-0">
+                    <CardTitle className="uppercase font-medium font-mono">{neo.name}</CardTitle>
+                    <CardDescription className="uppercase font-normal font-mono">{`ID ${neo.id}`}</CardDescription>
                 </div>
 
                 <span
                     className={cn(
-                        "text-xs px-2 py-1 font-mono",
+                        "text-xs px-2 py-1 font-mono whitespace-nowrap shrink-0",
                         neo.is_potentially_hazardous_asteroid
                             ? "bg-red-500/10 text-red-500"
                             : "bg-emerald-500/10 text-emerald-500"
@@ -55,17 +56,26 @@ export function AsteroidCard({
 
             <CardContent className="px-0 *:px-6 space-y-6">
                 <div className="grid grid-cols-2 gap-4">
+                    <Stat className="border-none p-0" label="Time" stat={format(
+                        parse(
+                            neo.close_approach_data[0].close_approach_date_full,
+                            "yyyy-MMM-dd HH:mm",
+                            new Date()
+                        ),
+                        "HH:mm 'UTC'",
+                        { timeZone: "UTC" }
+                    )} />
                     <Stat className="border-none p-0" label="Closest Approach" stat={`${formattedKm} km`} />
                     <Stat className="border-none p-0" label="Velocity" stat={`${velocity.toFixed(2)} km/s`} />
                     <Stat className="border-none p-0" label="Oribiting Body" stat={orbitingBody} />
-                    <Stat className="border-none p-0" label="Estimated Diameter Range" stat={estimatedDiameterRange} />
+                    <Stat className="border-none p-0 col-span-2" label="Estimated Diameter Range" stat={estimatedDiameterRange} />
                 </div>
 
                 <Separator />
 
                 <div className="relative z-20 flex items-center justify-between gap-4">
                     <p className={cn(
-                        "text-muted-foreground text-sm relative"
+                        "text-muted-foreground text-xs relative uppercase font-mono"
                     )}>
                         <AnimatePresence mode="wait">
                             <motion.span
@@ -101,7 +111,7 @@ export function AsteroidCard({
             <AnimatePresence>
                 {overlayOpen && (
                     <motion.div
-                        className="absolute inset-0 z-10 bg-card"
+                        className="absolute inset-0 z-10 bg-secondary"
                         aria-hidden
                         key={neo.id}
                         initial={{ opacity: 0 }}
@@ -109,17 +119,16 @@ export function AsteroidCard({
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.15 }}
                     >
-                        {/* Empty content area for you to fill in */}
-                        <div className="h-full w-full p-6">
+                        <div className="h-full w-full p-6 flex flex-col">
                             <div className="space-y-1">
                                 <h3 className="font-semibold leading-none">{neo.name} Size Visualisation</h3>
                                 {/* <p className="text-sm text-muted-foreground">Reference: Football Pitch - 105 m</p> */}
                             </div>
-                            <div>
-                                {/**
-                                 * Use VisX to do the bar chart comparing the asteroid to the reference item
-                                 * Reference item is likely going to be a football pitch
-                                 */}
+                            <div className="pb-6 flex-1 grid justify-start items-center">
+                                <AsteroidSizeChart
+                                    name={neo.name}
+                                    maxDiameter={neo.estimated_diameter.meters.estimated_diameter_max}
+                                />
                             </div>
                         </div>
                     </motion.div>

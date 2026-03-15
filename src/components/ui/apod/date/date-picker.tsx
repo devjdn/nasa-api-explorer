@@ -2,9 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { ArrowUp02Icon, Calendar03Icon } from "@hugeicons/core-free-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod/v4";
 import { cn } from "@/lib/utils";
@@ -18,14 +15,21 @@ import {
 } from "@/components/ui/popover";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { CalendarDays, ArrowUp } from "lucide-react";
+
+interface DatePickerFormProps {
+    minDate: Date;
+    maxDate: Date;
+    route: string;
+}
 
 const FormSchema = z.object({
     date: z.date({
-        error: "A date from June 16, 1995 and onwards is required",
+        error: "A valid date is required",
     }),
 });
 
-export function DatePickerForm() {
+export function DatePickerForm({ minDate, maxDate, route }: DatePickerFormProps) {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -36,18 +40,15 @@ export function DatePickerForm() {
         const formattedDate = format(data.date, "yyyy-MM-dd");
 
         startTransition(() => {
-            router.push(`/apod/${formattedDate}`);
+            router.push(`/${route}/${formattedDate}`);
         });
     }
-
-    const MIN_DATE = new Date(1995, 5, 16);
-    const MAX_DATE = new Date();
 
     return (
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="bg-secondary border border-border/80 p-2 pl-4 flex items-center gap-2 shadow-xl"
+                className="bg-secondary border border-border/80 p-2 pl-4 flex items-center gap-2"
             >
                 <div className="">
                     <FormField
@@ -60,12 +61,12 @@ export function DatePickerForm() {
                                         <FormControl>
                                             <button
                                                 className={cn(
-                                                    "w-[240px] flex items-center gap-2 text-sm text-left font-mono hover:cursor-pointer justify-start p-0 has-[>svg]:px-0 font-normal bg-transparent border-none hover:bg-transparent hover:text-current focus:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0",
+                                                    "w-[210px] flex items-center gap-2 text-sm text-left font-mono uppercase hover:cursor-pointer justify-start p-0 has-[>svg]:px-0 font-normal bg-transparent border-none hover:bg-transparent hover:text-current focus:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0",
                                                     !field.value &&
                                                     "text-muted-foreground"
                                                 )}
                                             >
-                                                <HugeiconsIcon size={20} icon={Calendar03Icon} />
+                                                <CalendarDays size={16} />
                                                 {field.value ? (
                                                     format(field.value, "PPP")
                                                 ) : (
@@ -85,10 +86,10 @@ export function DatePickerForm() {
                                             selected={field.value}
                                             onSelect={field.onChange}
                                             captionLayout="dropdown"
-                                            startMonth={MIN_DATE}
-                                            endMonth={MAX_DATE}
+                                            startMonth={minDate}
+                                            endMonth={maxDate}
                                             disabled={(date) =>
-                                                date > MAX_DATE || date < MIN_DATE
+                                                date > maxDate || date < minDate
                                             }
                                         />
                                     </PopoverContent>
@@ -108,7 +109,7 @@ export function DatePickerForm() {
                     {isPending ? (
                         <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
                     ) : (
-                        <HugeiconsIcon icon={ArrowUp02Icon} />
+                        <ArrowUp />
                     )}
                 </Button>
             </form>

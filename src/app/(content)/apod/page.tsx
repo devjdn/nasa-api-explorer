@@ -1,6 +1,7 @@
 import { nasaClient } from "@/lib/nasa/client";
 import APODDetails from "@/components/ui/apod/details";
 import { Separator } from "@/components/ui/separator";
+import { PageEyebrow, PageTitle, SubsectionTitle } from "@/components/ui/typography";
 import APODMedia from "@/components/ui/apod/media";
 import { notFound } from "next/navigation";
 
@@ -10,10 +11,10 @@ export default async function APODPage() {
     // console.log(apod);
 
     return (
-        <div className="space-y-8 @container w-full max-w-5xl mx-auto px-3 lg:px-0">
+        <div className="space-y-8 *:not-data-[slot=separator]:max-w-5xl *:not-data-[slot=separator]:w-full *:not-data-[slot=separator]:mx-auto *:not-data-[slot=separator]:px-3 *:not-data-[slot=separator]:lg:px-0">
             <div className="space-y-6">
-                <p className="font-medium text-orange-600 dark:text-orange-500 text-sm lg:text-base">Astronomy Picture of the Day</p>
-                <h1 className="font-display font-semibold text-3xl lg:text-4xl supports-text-pretty:text-pretty text-balance">{apod.title}</h1>
+                <PageEyebrow>Astronomy Picture of the Day</PageEyebrow>
+                <PageTitle>{apod.title}</PageTitle>
                 <APODDetails copyright={apod.copyright} date={apod.date} media_type={apod.media_type} />
             </div>
 
@@ -24,7 +25,7 @@ export default async function APODPage() {
             <Separator />
 
             <div className="space-y-4">
-                <h2 className="font-display font-medium text-lg lg:text-xl">Explanation</h2>
+                <SubsectionTitle as="h2">Explanation</SubsectionTitle>
                 <p className="text-base text-muted-foreground">{apod.explanation}</p>
             </div>
         </div>

@@ -16,7 +16,7 @@ export default function APODMedia({
     const isDirectVideo = /\.(mp4|webm|mov)$/i.test(url);
 
     return (
-        <div className="w-full bg-secondary">
+        <div className="w-full">
             {media_type === "image" ? (
                 <Image
                     src={hdurl ?? url}

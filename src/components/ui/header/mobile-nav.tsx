@@ -41,13 +41,13 @@ export default function MobileNav() {
                     id="mobile-nav"
                     role="dialog"
                     aria-modal="true"
-                    className="fixed top-12 left-0 flex flex-col gap-4 w-full bg-primary dark:bg-background z-50 h-[calc(100dvh-48px)] px-3 py-8"
+                    className="fixed top-12 left-0 flex flex-col gap-4 w-full bg-background z-50 h-[calc(100dvh-48px)] px-3 py-8"
                 >
                     <nav className="flex-1">
                         <ul className="space-y-4 font-mono text-3xl">
                             {NASA_APIS.map((api, i) => (
                                 <li key={api.href}>
-                                    {i > 1 ? (
+                                    {i > 2 ? (
                                         <div className="text-neutral-700">
                                             <span>{api.shortName}</span>
                                         </div>
@@ -58,7 +58,7 @@ export default function MobileNav() {
                                             onClick={close}
                                         >
                                             <div className={cn(
-                                                "text-white",
+                                                "text-foreground",
                                                 pathname.includes(api.href) && "text-orange-500"
                                             )}>
                                                 <span>{api.shortName}</span>
@@ -69,7 +69,7 @@ export default function MobileNav() {
                             ))}
                         </ul>
                     </nav>
-                    <div>
+                    <div className="w-fit">
                         <ThemeSwitcher />
                     </div>
                 </div>
