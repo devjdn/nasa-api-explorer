@@ -24,8 +24,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NASA API Explorer",
-  description: "NASA API Explorer is an app dedicated to giving users the simplest and most effective interface to interact with the NASA APIs.",
+  title: {
+    template: "%s | Stargazer",
+    default: "Stargazer"
+  },
+  description: "Stargazer is an app dedicated to giving users the simplest and most effective interface to interact with the NASA APIs.",
 };
 
 export default function RootLayout({

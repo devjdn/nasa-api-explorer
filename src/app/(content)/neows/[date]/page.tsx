@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
 import { nasaClient } from "@/lib/nasa/client";
 import { Separator } from "@/components/ui/separator";
 import Stat from "@/components/ui/stat";
 import { SectionTitle } from "@/components/ui/typography";
 import { format } from "date-fns";
-import ObjectGrid from "@/components/ui/neows/objects-grid";
 import ObjectSection from "@/components/ui/neows/object-section";
 
 type NeoWsDatePageProps = {
@@ -12,12 +12,20 @@ type NeoWsDatePageProps = {
     }>;
 }
 
+export async function generateMetadata({ params }: NeoWsDatePageProps): Promise<Metadata> {
+    const { date } = await params;
+
+    return {
+        title: `${format(new Date(date), "do MMMM yyyy")} - NeoWs`,
+    }
+}
+
 export default async function NeoWsPage({ params }: NeoWsDatePageProps) {
     const { date } = await params;
     const neo = await nasaClient.getNeosByDate(date);
     // console.log(neo)
 
-    const formattedDate = format(new Date(date), "do MMMM yyyy")
+    const formattedDate = format(new Date(date), "do MMMM yyyy");
 
     const hazardousCount = neo.filter((n) => n.is_potentially_hazardous_asteroid).length;
     const largestObject = neo.reduce(

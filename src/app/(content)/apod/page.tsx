@@ -4,6 +4,11 @@ import { Separator } from "@/components/ui/separator";
 import { PageEyebrow, PageTitle, SubsectionTitle } from "@/components/ui/typography";
 import APODMedia from "@/components/ui/apod/media";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Astronomy Picture of the Day"
+}
 
 export default async function APODPage() {
     const apod = await nasaClient.getTodayAPOD();

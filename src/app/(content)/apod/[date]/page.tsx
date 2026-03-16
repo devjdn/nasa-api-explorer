@@ -1,10 +1,27 @@
+import type { Metadata } from 'next'
 import { nasaClient } from "@/lib/nasa/client";
 import APODDetails from "@/components/ui/apod/details";
 import { Separator } from "@/components/ui/separator";
 import { PageEyebrow, PageTitle, SubsectionTitle } from "@/components/ui/typography";
 import APODMedia from "@/components/ui/apod/media";
 
-export default async function APODPage({ params }: { params: Promise<{ date: string; }> }) {
+type Props = {
+    params: Promise<{
+        date: string;
+    }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { date } = await params;
+    const apod = await nasaClient.getAPODByDate(date);
+
+    return {
+        title: `${apod.title} - APOD`,
+        description: apod.explanation,
+    }
+}
+
+export default async function APODPage({ params }: Props) {
     const { date } = await params;
     const apod = await nasaClient.getAPODByDate(date);
     // console.log(apod);
