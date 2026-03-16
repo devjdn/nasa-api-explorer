@@ -1,9 +1,13 @@
+import type { Metadata } from "next";
 import { nasaClient } from "@/lib/nasa/client";
 import { Separator } from "@/components/ui/separator";
 import Stat from "@/components/ui/stat";
 import { SectionTitle } from "@/components/ui/typography";
-import ObjectGrid from "@/components/ui/neows/objects-grid";
 import ObjectSection from "@/components/ui/neows/object-section";
+
+export const metadata: Metadata = {
+    title: "Near Earth Object Web Service"
+}
 
 export default async function NeoWsPage() {
     const date = new Date().toISOString().split("T")[0]

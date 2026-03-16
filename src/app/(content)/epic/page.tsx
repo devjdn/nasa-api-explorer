@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { epicClient } from "@/lib/EPIC/client";
 import { Separator } from "@/components/ui/separator";
 import { EPIC_IMAGE_TYPES, type EpicImageType } from "@/lib/EPIC/types";
@@ -11,6 +12,10 @@ type EpicPageProps = {
         date?: string;
     }>;
 };
+
+export const metadata: Metadata = {
+    title: "Earth Polychromatic Imaging Camera"
+}
 
 export default async function EPICPage({ searchParams }: EpicPageProps) {
     const params = await searchParams;
