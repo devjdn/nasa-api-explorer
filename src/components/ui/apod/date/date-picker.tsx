@@ -48,56 +48,56 @@ export function DatePickerForm({ minDate, maxDate, route }: DatePickerFormProps)
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="bg-secondary border border-border/80 p-2 pl-4 flex items-center gap-2"
+                className="flex items-center gap-2 w-full"
             >
-                <div className="">
-                    <FormField
-                        control={form.control}
-                        name="date"
-                        render={({ field }) => (
-                            <FormItem>
-                                <Popover>
-                                    <PopoverTrigger asChild>
-                                        <FormControl>
-                                            <button
-                                                className={cn(
-                                                    "w-[210px] flex items-center gap-2 text-sm text-left font-mono uppercase hover:cursor-pointer justify-start p-0 has-[>svg]:px-0 font-normal bg-transparent border-none hover:bg-transparent hover:text-current focus:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0",
-                                                    !field.value &&
-                                                    "text-muted-foreground"
-                                                )}
-                                            >
-                                                <CalendarDays size={16} />
-                                                {field.value ? (
-                                                    format(field.value, "PPP")
-                                                ) : (
-                                                    <span>Pick a date</span>
-                                                )}
-                                            </button>
-                                        </FormControl>
-                                    </PopoverTrigger>
-                                    <PopoverContent
-                                        className="w-auto p-0 rounded-none"
-                                        sideOffset={24}
-                                        side="top"
-                                        align="start"
-                                    >
-                                        <Calendar
-                                            mode="single"
-                                            selected={field.value}
-                                            onSelect={field.onChange}
-                                            captionLayout="dropdown"
-                                            startMonth={minDate}
-                                            endMonth={maxDate}
-                                            disabled={(date) =>
-                                                date > maxDate || date < minDate
-                                            }
-                                        />
-                                    </PopoverContent>
-                                </Popover>
-                            </FormItem>
-                        )}
-                    />
-                </div>
+                <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                        <FormItem className="w-full">
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <FormControl>
+                                        <button
+                                            className={cn(
+                                                "max-w-[210px] w-full bg-input h-8 px-3 flex items-center gap-2 text-xs text-left font-mono uppercase hover:cursor-pointer justify-start font-normal hover:text-current focus-visible:ring-0 focus-visible:ring-offset-0",
+                                                !field.value &&
+                                                "text-muted-foreground"
+                                            )}
+                                        >
+                                            <CalendarDays size={14} />
+                                            {field.value ? (
+                                                format(field.value, "PPP")
+                                            ) : (
+                                                <span>Pick a date</span>
+                                            )}
+                                        </button>
+                                    </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent
+                                    className="w-auto p-0 rounded-none"
+                                    sideOffset={24}
+                                    side="top"
+                                    align="start"
+
+                                >
+                                    <Calendar
+                                        mode="single"
+                                        selected={field.value}
+                                        onSelect={field.onChange}
+                                        captionLayout="dropdown"
+                                        startMonth={minDate}
+                                        endMonth={maxDate}
+                                        disabled={(date) =>
+                                            date > maxDate || date < minDate
+                                        }
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                        </FormItem>
+                    )}
+                />
+
 
                 <Button
                     size="icon-sm"
