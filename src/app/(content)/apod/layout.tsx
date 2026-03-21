@@ -1,5 +1,4 @@
 import ControlPanel from "@/components/ui/control-panel/control-panel";
-import { DatePickerForm } from "@/components/ui/apod/date/date-picker";
 import ControlPanelSlot from "@/components/ui/control-panel/control-panel-slot";
 
 export default function APODLayout({ children }: { children: React.ReactNode }) {
@@ -11,7 +10,7 @@ export default function APODLayout({ children }: { children: React.ReactNode }) 
             {/* <div className="sticky bottom-2 lg:bottom-8 z-20 flex justify-center">
                 <DatePickerForm minDate={MIN_DATE} maxDate={MAX_DATE} route="apod" />
             </div> */}
-            <ControlPanel apiName={"APOD"} />
+            <ControlPanel />
         </div>
     );
 }

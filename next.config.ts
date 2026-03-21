@@ -14,7 +14,8 @@ const nextConfig: NextConfig = {
         protocol: "https",
       }
     ]
-  }
+  },
+  allowedDevOrigins: ['quality-national-roughy.ngrok-free.app'],
 };
 
 export default nextConfig;
