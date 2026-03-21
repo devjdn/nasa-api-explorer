@@ -23,6 +23,7 @@ export default function APODMedia({
                     alt={alt}
                     width={1024}
                     height={500}
+                    className="h-auto"
                     placeholder="blur"
                     fetchPriority="high"
                     blurDataURL={url}
