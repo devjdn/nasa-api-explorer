@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Separator } from "../separator";
+// import { Separator } from "../separator";
 import { cn } from "@/lib/utils";
 import { Maximize2Icon, Minimize2Icon } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -20,29 +20,53 @@ export default function ControlPanel({ apiName }: ControlPanelProps) {
   const { open, setOpen, toggleOpen, activeControlPanel } =
     useControlPanelStore();
   const panelRef = React.useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = React.useState<boolean | null>(null);
+  const hasInitialised = React.useRef(false);
 
   React.useEffect(() => {
-    function handlePointerOutside(event: PointerEvent) {
-      if (!panelRef.current) return;
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
 
-      const target = event.target as HTMLElement;
-
-      if (
-        panelRef.current.contains(target) ||
-        target.closest("[data-control-panel-safe]") // this is for elements with a data attribute to mark it safe for the control panel
-      ) {
-        return;
-      }
-
-      setOpen(false);
+    function handleMediaChange(event: MediaQueryListEvent) {
+      setIsMobile(event.matches);
     }
 
-    document.addEventListener("pointerdown", handlePointerOutside);
+    mediaQuery.addEventListener("change", handleMediaChange);
 
     return () => {
-      document.removeEventListener("pointerdown", handlePointerOutside);
+      mediaQuery.removeEventListener("change", handleMediaChange);
     };
-  }, [setOpen]);
+  }, []);
+
+  React.useEffect(() => {
+    if (isMobile === null || hasInitialised.current) return;
+
+    setOpen(!isMobile);
+    hasInitialised.current = true;
+  }, [isMobile, setOpen]);
+
+  // React.useEffect(() => {
+  //   function handlePointerOutside(event: PointerEvent) {
+  //     if (!panelRef.current) return;
+
+  //     const target = event.target as HTMLElement;
+
+  //     if (
+  //       panelRef.current.contains(target) ||
+  //       target.closest("[data-control-panel-safe]") // this is for elements with a data attribute to mark it safe for the control panel
+  //     ) {
+  //       return;
+  //     }
+
+  //     setOpen(false);
+  //   }
+
+  //   document.addEventListener("pointerdown", handlePointerOutside);
+
+  //   return () => {
+  //     document.removeEventListener("pointerdown", handlePointerOutside);
+  //   };
+  // }, [setOpen]);
 
   return (
     <div className="flex justify-end w-full sticky bottom-3 md:bottom-8 @container z-30">
@@ -114,6 +138,7 @@ function PanelContent({ panel }: { panel: ControlPanelType }) {
     case "apod":
       const APOD_MIN_DATE = new Date(1995, 5, 16);
       const APOD_MAX_DATE = getApodMaxDate();
+      const APOD_UNAVAILABLE_DATES = ["2026-03-12"];
 
       return (
         <div className="text-xs font-mono">
@@ -121,6 +146,7 @@ function PanelContent({ panel }: { panel: ControlPanelType }) {
             <DatePickerForm
               minDate={APOD_MIN_DATE}
               maxDate={APOD_MAX_DATE}
+              unavailableDates={APOD_UNAVAILABLE_DATES}
               route={"apod"}
             />
           </div>
@@ -131,7 +157,13 @@ function PanelContent({ panel }: { panel: ControlPanelType }) {
         </div>
       );
     case "epic":
-      return <div className="text-xs font-mono">EPIC Controls</div>;
+      return (
+        <div className="text-xs font-mono space-y-4">
+          {/*<div className="p-3">
+            <DatePickerForm minDate={} route={"neows"} />
+          </div>*/}
+        </div>
+      );
     case "neows":
       const NEOWS_MIN_DATE = new Date(1900, 1, 1);
 

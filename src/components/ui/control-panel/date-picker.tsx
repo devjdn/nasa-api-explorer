@@ -36,6 +36,7 @@ import {
 interface DatePickerFormProps {
   minDate: Date;
   maxDate?: Date;
+  unavailableDates?: string[];
   route: string;
 }
 
@@ -48,11 +49,41 @@ const FormSchema = z.object({
 export function DatePickerForm({
   minDate,
   maxDate,
+  unavailableDates,
   route,
 }: DatePickerFormProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
   const resolvedMaxDate = maxDate ?? getDefaultMaxDate();
+  const unavailableDateSet = new Set(
+    unavailableDates?.map((d) => format(new Date(d), "yyyy-MM-dd")) ?? [],
+  );
+  const isDateDisabled = (date: Date) => {
+    const formatted = format(date, "yyyy-MM-dd");
+    return (
+      unavailableDateSet.has(formatted) ||
+      date > resolvedMaxDate ||
+      date < minDate
+    );
+  };
+  function findNextValidDate(start: Date, direction: 1 | -1) {
+    const next = new Date(start);
+
+    while (true) {
+      next.setUTCDate(next.getUTCDate() + direction);
+
+      // stop if out of bounds
+      if (next < minDate || next > resolvedMaxDate) {
+        return null;
+      }
+
+      if (!isDateDisabled(next)) {
+        return next;
+      }
+    }
+  }
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -67,28 +98,45 @@ export function DatePickerForm({
 
   function backOneDay() {
     const { date } = form.getValues();
-    if (!date || date === minDate) return;
+    if (!date) return;
 
-    date.setUTCDate(date.getUTCDate() - 1);
-    form.setValue("date", date);
+    const prev = findNextValidDate(date, -1);
+    if (!prev) return;
+
+    form.setValue("date", prev);
   }
 
   function forwardOneDay() {
     const { date } = form.getValues();
-    if (!date || date === resolvedMaxDate) return;
+    if (!date) return;
 
-    date.setUTCDate(date.getUTCDate() + 1);
-    form.setValue("date", date);
+    const next = findNextValidDate(date, 1);
+    if (!next) return;
+
+    form.setValue("date", next);
   }
 
   function goMostRecent() {
-    const mostRecent = getDefaultMaxDate();
+    const mostRecent = resolvedMaxDate;
     form.setValue("date", mostRecent);
   }
 
   function goRandom() {
-    const randomDate = getRandomDate(minDate, resolvedMaxDate);
-    form.setValue("date", randomDate);
+    let attempts = 0;
+    const MAX_ATTEMPTS = 50;
+
+    while (attempts < MAX_ATTEMPTS) {
+      const randomDate = getRandomDate(minDate, resolvedMaxDate);
+
+      if (!isDateDisabled(randomDate)) {
+        form.setValue("date", randomDate);
+        return;
+      }
+
+      attempts++;
+    }
+
+    form.setValue("date", resolvedMaxDate);
   }
 
   return (
@@ -149,9 +197,14 @@ export function DatePickerForm({
                         captionLayout="dropdown"
                         startMonth={minDate}
                         endMonth={maxDate}
-                        disabled={(date) =>
-                          date > resolvedMaxDate || date < minDate
-                        }
+                        disabled={(date) => {
+                          const formatted = format(date, "yyyy-MM-dd");
+                          return (
+                            unavailableDateSet.has(formatted) ||
+                            date > resolvedMaxDate ||
+                            date < minDate
+                          );
+                        }}
                       />
                     </PopoverContent>
                   </Popover>
@@ -197,20 +250,20 @@ export function DatePickerForm({
           size={"sm"}
           variant={"outline"}
           className="uppercase text-xs"
-          onClick={goRandom}
-          disabled={isPending}
+          onClick={goMostRecent}
+          disabled={isPending || form.getValues().date === resolvedMaxDate}
         >
-          <Shuffle className="size-3.5" size={14} />
-          Random
+          Most Recent
         </Button>
         <Button
           size={"sm"}
           variant={"outline"}
           className="uppercase text-xs"
-          onClick={goMostRecent}
-          disabled={isPending || form.getValues().date === resolvedMaxDate}
+          onClick={goRandom}
+          disabled={isPending}
         >
-          Most Recent
+          <Shuffle className="size-3.5" size={14} />
+          Random
         </Button>
       </div>
     </div>
