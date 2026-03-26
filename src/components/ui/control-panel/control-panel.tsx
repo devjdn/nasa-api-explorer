@@ -69,10 +69,10 @@ export default function ControlPanel({ apiName }: ControlPanelProps) {
   // }, [setOpen]);
 
   return (
-    <div className="flex justify-end w-full sticky bottom-3 md:bottom-8 @container z-30">
+    <div className="flex justify-end sticky bottom-3 md:bottom-8 @container z-30 pointer-events-none">
       <div
         ref={panelRef}
-        className="relative max-w-sm w-full bg-card flex flex-col-reverse select-none md:right-8 border-y @md:border-l md:border-r corner-caps shadow-lg"
+        className="relative max-w-sm w-full bg-card flex flex-col-reverse select-none md:right-8 border-y @md:border-l md:border-r corner-caps shadow-lg pointer-events-auto"
       >
         <div className="p-3 flex justify-between items-center gap-4">
           <span className="inline-flex items-center gap-2">
