@@ -59,6 +59,11 @@ export default function APODMedia({
           )
         )}
       </div>
+      <p className="text-sm text-muted-foreground">
+        <span className="font-medium text-foreground/80">Credit: </span>{" "}
+        {copyright ??
+          "No listed copyright holder (May be visible in the media)"}
+      </p>
       <ShareActions
         title={title}
         date={date}

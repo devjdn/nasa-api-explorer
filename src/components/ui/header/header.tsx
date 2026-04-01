@@ -14,7 +14,7 @@ export default function Header() {
       <div className="justify-self-start place-self-center">
         <Link className="group" href={"/"}>
           <div className="">
-            <p className="text-xl font-display font-semibold">
+            <p className="text-base font-mono uppercase font-medium">
               Stargazer <span className="text-orange-500">1.0</span>
             </p>
           </div>

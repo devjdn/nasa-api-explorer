@@ -10,16 +10,11 @@ import {
 import { Badge } from "../badge";
 
 type DetailsProps = {
-  copyright?: string;
   date: string;
   media_type: "image" | "video";
 };
 
-export default function APODDetails({
-  copyright,
-  date,
-  media_type,
-}: DetailsProps) {
+export default function APODDetails({ date, media_type }: DetailsProps) {
   return (
     <div className="flex gap-1 flex-wrap">
       <Badge variant="secondary">
@@ -44,11 +39,6 @@ export default function APODDetails({
       <Badge variant="secondary">
         <HugeiconsIcon size={18} icon={Calendar03Icon} />
         <span>{format(parseISO(date), "do MMMM yyyy")}</span>
-      </Badge>
-
-      <Badge variant="secondary" className="whitespace-normal">
-        <HugeiconsIcon size={18} icon={Copyright} />
-        <span>{copyright ?? "No copyright holder"}</span>
       </Badge>
     </div>
   );
