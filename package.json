@@ -19,6 +19,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@hugeicons/core-free-icons": "^3.3.0",
     "@hugeicons/react": "^1.1.6",
+    "@remixicon/react": "^4.9.0",
     "@uidotdev/usehooks": "^2.4.1",
     "@zumer/snapdom": "^2.6.0",
     "class-variance-authority": "^0.7.1",

@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { epicClient } from "@/lib/EPIC/client";
 import { Separator } from "@/components/ui/separator";
 import { EPIC_IMAGE_TYPES, type EpicImageType } from "@/lib/EPIC/types";
-import EPICControls from "@/components/ui/epic/controls";
-import EPICImagery from "@/components/ui/epic/imagery";
 import { PageEyebrow, PageTitle } from "@/components/ui/typography";
+import EPICViewer from "@/components/ui/epic/viewer";
 
 type EpicPageProps = {
   searchParams: Promise<{
@@ -56,23 +55,22 @@ export default async function EPICPage({ searchParams }: EpicPageProps) {
   // console.log(images)
 
   return (
-    <div className="space-y-8 @container border-x">
-      <div className="space-y-12 px-3 lg:px-8">
-        <div className="space-y-6">
-          <PageEyebrow>EPIC</PageEyebrow>
-          <PageTitle>Earth Polychromatic Imaging Camera</PageTitle>
-        </div>
-
-        <EPICControls
-          currentType={type}
-          currentDate={date}
-          availableDates={availableDates}
-        />
+    <div className="@container border-x">
+      <div className="px-3 lg:px-8 pb-8 space-y-6">
+        <PageEyebrow>EPIC</PageEyebrow>
+        <PageTitle>Earth Polychromatic Imaging Camera</PageTitle>
       </div>
 
       <Separator />
 
-      <EPICImagery images={images} type={type} />
+      <EPICViewer
+        images={images}
+        currentType={type}
+        currentDate={date}
+        availableDates={availableDates}
+      />
+
+      <Separator className="mb-8" />
     </div>
   );
 }
