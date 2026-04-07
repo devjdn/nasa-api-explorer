@@ -31,7 +31,7 @@ export default function EPICControlSidebar({
   setGridSize,
 }: EPICSidebarControlsProps) {
   return (
-    <aside className="border-b lg:border-r lg:border-b-0 pt-8 lg:pb-8 flex flex-col">
+    <aside className="pt-8 lg:pb-8 flex flex-col lg:h-200 lg:self-start lg:sticky lg:top-14 lg:left-0">
       <div className="space-y-1 px-3 lg:px-8 pb-6">
         <p className="text-base font-medium uppercase font-mono">
           EPIC Controls

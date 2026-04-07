@@ -86,7 +86,7 @@ export default function EPICImageFilters({
             <Button
               className="w-full justify-start"
               size={"sm"}
-              variant={"outline"}
+              variant={"secondary"}
             >
               <RiCalendar2Line />
               <span>{format(currentDate, "PPP")}</span>

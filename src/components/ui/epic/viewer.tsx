@@ -6,6 +6,7 @@ import * as React from "react";
 import EPICControlSidebar from "./sidebar/control-sidebar";
 import Image from "next/image";
 import EPICViewerGallery from "./images/gallery";
+import { cn } from "@/lib/utils";
 
 export type EPICViewerProps = {
   images: Array<EpicImage>;
@@ -35,7 +36,12 @@ export default function EPICViewer({
   );
 
   return (
-    <div className="flex flex-col lg:h-200 lg:grid lg:grid-cols-[300px_1fr]">
+    <div
+      className={cn(
+        "flex flex-col lg:grid lg:grid-cols-[300px_1fr]",
+        viewerMode === "slideshow" ? "lg:h-200" : "lg:max-h-unset",
+      )}
+    >
       <EPICControlSidebar
         currentType={currentType}
         currentDate={currentDate}
@@ -45,9 +51,9 @@ export default function EPICViewer({
         gridSize={gridSize}
         setGridSize={setGridSize}
       />
-      <div className="@container flex-1 overflow-hidden">
+      <div className="@container flex-1 overflow-hidden border-t lg:border-l lg:border-t-0">
         {viewerMode === "slideshow" ? (
-          <div className="size-full relative">
+          <div className="size-full relative aspect-square">
             <Image
               src={activeImageUrl}
               alt={activeImage.image}

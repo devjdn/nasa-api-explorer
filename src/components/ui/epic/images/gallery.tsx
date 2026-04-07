@@ -27,7 +27,7 @@ export default function EPICViewerGallery({
   }
 
   return (
-    <div className="flex flex-col gap-6 size-full px-3 lg:px-8 pt-3 lg:pt-8">
+    <div className="flex flex-col gap-6 size-full px-3 lg:px-8 py-8">
       <div>
         <p className="font-medium font-mono uppercase">
           {images.length} Images
