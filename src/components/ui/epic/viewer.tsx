@@ -7,6 +7,7 @@ import EPICControlSidebar from "./sidebar/control-sidebar";
 import Image from "next/image";
 import EPICViewerGallery from "./images/gallery";
 import { cn } from "@/lib/utils";
+import EPICViewerSlideshow from "./images/slideshow";
 
 export type EPICViewerProps = {
   images: Array<EpicImage>;
@@ -29,12 +30,6 @@ export default function EPICViewer({
   const [gridSize, setGridSize] = React.useState<GridSizeOptions>("sm");
   const activeImage = images[imageIndex];
 
-  const activeImageUrl = epicClient.buildImageUrl(
-    currentType,
-    activeImage.image,
-    activeImage.date,
-  );
-
   return (
     <div
       className={cn(
@@ -53,16 +48,12 @@ export default function EPICViewer({
       />
       <div className="@container flex-1 overflow-hidden border-t lg:border-l lg:border-t-0">
         {viewerMode === "slideshow" ? (
-          <div className="size-full relative aspect-square">
-            <Image
-              src={activeImageUrl}
-              alt={activeImage.image}
-              fill
-              className="w-full h-full object-contain"
-              unoptimized
-              priority
-            />
-          </div>
+          <EPICViewerSlideshow
+            currentType={currentType}
+            activeImage={activeImage}
+            images={images}
+            setActiveImage={setImageIndex}
+          />
         ) : (
           <EPICViewerGallery
             images={images}
