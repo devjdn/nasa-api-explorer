@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default async function APODPage() {
   const apod = await nasaClient.getTodayAPOD();
-  if (!apod) notFound();
+  if (!apod) return notFound();
   // console.log(apod);
 
   return <APODPageContent apod={apod} />;
