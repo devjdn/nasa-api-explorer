@@ -1,4 +1,9 @@
-import type { ApodResponse, NeoObject, NeoWsFeedResponse } from "./types";
+import type {
+  ApiResult,
+  ApodResponse,
+  NeoObject,
+  NeoWsFeedResponse,
+} from "./types";
 
 const NASA_BASE_URL = "https://api.nasa.gov";
 const NASA_API_KEY = process.env.NASA_API_KEY!;
@@ -17,11 +22,16 @@ export class NASAClient {
   private async fetch<T>(
     endpoint: string,
     params?: Record<string, string | number | undefined>,
-    options?: { revalidate?: number },
-  ): Promise<T | null> {
-    try {
-      const searchParams = new URLSearchParams();
+    options?: { revalidate?: number; timeoutMs?: number },
+  ): Promise<ApiResult<T>> {
+    const controller = new AbortController();
+    const timeout = setTimeout(
+      () => controller.abort(),
+      options?.timeoutMs ?? 30000,
+    );
+    const searchParams = new URLSearchParams();
 
+    try {
       if (params) {
         for (const [k, v] of Object.entries(params)) {
           if (v !== undefined) {
@@ -35,20 +45,47 @@ export class NASAClient {
       const url = `${NASA_BASE_URL}${endpoint}?${searchParams.toString()}`;
 
       const res = await fetch(url, {
+        signal: controller.signal,
         next: options?.revalidate
           ? { revalidate: options.revalidate }
           : undefined,
       });
 
       if (!res.ok) {
-        console.error(`NASA API error: ${res.status}`);
-        return null;
+        let message: string | undefined;
+
+        try {
+          const body = await res.json();
+          message = body?.error?.message || body?.msg || body?.error;
+        } catch {
+          // ignore non-JSON responses
+        }
+
+        console.error(`[NASAClient] ${endpoint} → ${res.status}`, message);
+
+        return {
+          ok: false,
+          error: this.parseError(res, message),
+        };
       }
 
-      return await res.json();
+      const data = await res.json();
+
+      return {
+        ok: true,
+        data,
+      };
     } catch (error) {
-      console.error("NASA fetch failed:", error);
-      return null;
+      return {
+        ok: false,
+        error: {
+          type: "NETWORK_ERROR",
+          message:
+            error instanceof Error ? error.message : "Network request failed",
+        },
+      };
+    } finally {
+      clearTimeout(timeout);
     }
   }
 
@@ -56,13 +93,11 @@ export class NASAClient {
    * APOD
    */
 
-  async getTodayAPOD(): Promise<ApodResponse | null> {
-    return await this.fetch<ApodResponse>("/planetary/apod", undefined, {
-      revalidate: 3600,
-    });
+  async getTodayAPOD(): Promise<ApiResult<ApodResponse>> {
+    return await this.fetch<ApodResponse>("/planetary/apod");
   }
 
-  async getAPODByDate(date: string): Promise<ApodResponse | null> {
+  async getAPODByDate(date: string): Promise<ApiResult<ApodResponse>> {
     return await this.fetch<ApodResponse>("/planetary/apod", { date });
   }
 
@@ -70,8 +105,8 @@ export class NASAClient {
    * NeoWs
    */
 
-  async getNeosByDate(date: string): Promise<NeoObject[]> {
-    const data = await this.fetch<NeoWsFeedResponse>(
+  async getNeosByDate(date: string): Promise<ApiResult<NeoObject[]>> {
+    const result = await this.fetch<NeoWsFeedResponse>(
       "/neo/rest/v1/feed",
       {
         start_date: date,
@@ -80,11 +115,49 @@ export class NASAClient {
       { revalidate: 3600 },
     );
 
-    if (!data) {
-      return [];
+    if (!result.ok) {
+      return result;
     }
 
-    return data.near_earth_objects[date] ?? [];
+    return {
+      ok: true,
+      data: result.data.near_earth_objects[date] ?? [],
+    };
+  }
+
+  private parseError(res: Response, message?: string) {
+    const status = res.status;
+
+    if (status === 429) {
+      return {
+        type: "RATE_LIMIT",
+        status: 429,
+        message,
+        retryAfter: Number(res.headers.get("Retry-After")) || undefined,
+      } as const;
+    }
+
+    if (status === 404) {
+      return {
+        type: "NOT_FOUND",
+        status: 404,
+        message,
+      } as const;
+    }
+
+    if (status >= 500) {
+      return {
+        type: "SERVER_ERROR",
+        status,
+        message,
+      } as const;
+    }
+
+    return {
+      type: "UNKNOWN",
+      status,
+      message,
+    } as const;
   }
 }
 

@@ -138,7 +138,7 @@ function PanelContent({ panel }: { panel: ControlPanelType }) {
     case "apod":
       const APOD_MIN_DATE = new Date(1995, 5, 16);
       const APOD_MAX_DATE = getApodMaxDate();
-      const APOD_UNAVAILABLE_DATES = ["2026-03-12", "2026-04-08"];
+      const APOD_UNAVAILABLE_DATES = ["2026-03-12"];
 
       return (
         <div className="text-xs font-mono">

@@ -1,10 +1,8 @@
 "use client";
 
-import { EpicClient, epicClient } from "@/lib/EPIC/client";
 import { EpicImage, EpicImageType } from "@/lib/EPIC/types";
 import * as React from "react";
 import EPICControlSidebar from "./sidebar/control-sidebar";
-import Image from "next/image";
 import EPICViewerGallery from "./images/gallery";
 import { cn } from "@/lib/utils";
 import EPICViewerSlideshow from "./images/slideshow";
@@ -28,7 +26,11 @@ export default function EPICViewer({
   const [viewerMode, setViewerMode] = React.useState<ViewerModes>("slideshow");
   const [imageIndex, setImageIndex] = React.useState(0);
   const [gridSize, setGridSize] = React.useState<GridSizeOptions>("sm");
-  const activeImage = images[imageIndex];
+  const activeImage = images[imageIndex] ?? images[0];
+
+  React.useEffect(() => {
+    setImageIndex(0);
+  }, [currentDate, currentType]);
 
   return (
     <div

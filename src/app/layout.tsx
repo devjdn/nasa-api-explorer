@@ -44,7 +44,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TooltipProvider>
             <Header />
-            <div className="px-3 lg:px-8 flex-1 ">{children}</div>
+            <div className="px-3 lg:px-8 flex-1 flex flex-col">{children}</div>
             <Footer />
           </TooltipProvider>
         </ThemeProvider>

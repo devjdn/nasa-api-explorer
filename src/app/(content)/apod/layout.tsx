@@ -7,7 +7,7 @@ export default function APODLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-8 max-w-5xl w-full mx-auto border-x">
+    <div className="flex-1 space-y-8 max-w-5xl w-full mx-auto border-x">
       <ControlPanelSlot panel={"apod"} />
 
       {children}
