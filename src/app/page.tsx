@@ -158,7 +158,7 @@ export default function Home() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-          <Card>
+          <Card className="corner-caps">
             <CardHeader>
               <MonoSmall>APOD</MonoSmall>
               <CardTitle>Astronomy Picture of the Day</CardTitle>
@@ -175,7 +175,7 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="corner-caps">
             <CardHeader>
               <MonoSmall>EPIC</MonoSmall>
               <CardTitle>Earth Polychromatic Imaging Camera</CardTitle>
@@ -192,7 +192,7 @@ export default function Home() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="corner-caps">
             <CardHeader>
               <MonoSmall>NeoWs</MonoSmall>
               <CardTitle>Near Earth Object Web Service</CardTitle>

@@ -37,7 +37,7 @@ export function AsteroidCard({
   const [overlayOpen, setOverlayOpen] = useState(false);
 
   return (
-    <Card>
+    <Card className="border-0 border-b sm:nth-[2n+1]:border-r xl:nth-[3n+1]:border-r xl:nth-[3n+2]:border-r xl:nth-[3n]:border-r-0">
       <CardHeader className="flex flex-col md:flex-row items-start justify-between gap-8">
         <div className="space-y-1 flex-1 min-w-0">
           <CardTitle className="uppercase font-medium font-mono">
@@ -157,7 +157,7 @@ export function AsteroidCard({
           >
             <div className="h-full w-full p-6 flex flex-col">
               <div className="space-y-1">
-                <h3 className="font-semibold leading-none">
+                <h3 className="font-medium uppercase font-mono leading-none">
                   {neo.name} Size Visualisation
                 </h3>
                 {/* <p className="text-sm text-muted-foreground">Reference: Football Pitch - 105 m</p> */}

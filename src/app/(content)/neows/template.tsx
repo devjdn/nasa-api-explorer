@@ -1,6 +1,6 @@
-import { DatePickerForm } from "@/components/ui/control-panel/date-picker";
 import ControlPanel from "@/components/ui/control-panel/control-panel";
 import ControlPanelSlot from "@/components/ui/control-panel/control-panel-slot";
+import { Separator } from "@/components/ui/separator";
 
 export default function NeoWsLayout({
   children,
@@ -19,6 +19,8 @@ export default function NeoWsLayout({
           Near Earth Object Web Service
         </h1>
       </div>
+
+      <Separator />
 
       {children}
 
