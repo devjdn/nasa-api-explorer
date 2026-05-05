@@ -1,13 +1,6 @@
 "use client";
 
-import * as React from "react";
 import type { EPICViewerProps, ViewerModes, GridSizeOptions } from "../viewer";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../../accordion";
 import { Separator } from "../../separator";
 import EPICImageFilters from "./image-filters";
 import EPICViewerModes from "./viewer-modes";
@@ -41,38 +34,34 @@ export default function EPICControlSidebar({
 
       <Separator />
 
-      <Accordion
-        type="multiple"
-        defaultValue={["image-filters", "viewer-modes"]}
-      >
-        <AccordionItem value="image-filters">
-          <AccordionTrigger>Image Filters</AccordionTrigger>
-          <AccordionContent>
-            <EPICImageFilters
-              currentType={currentType}
-              currentDate={currentDate}
-              availableDates={availableDates}
-            />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="viewer-modes">
-          <AccordionTrigger>Viewer Modes</AccordionTrigger>
-          <AccordionContent>
-            <EPICViewerModes
-              viewerMode={viewerMode}
-              setViewerModeAction={setViewerMode}
-              gridSize={gridSize}
-              setGridSizeAction={setGridSize}
-            />
-          </AccordionContent>
-        </AccordionItem>
-        {/*<AccordionItem value="playback-options">
-          <AccordionTrigger>Playback Options</AccordionTrigger>
-          <AccordionContent>
-            <p>Test</p>
-          </AccordionContent>
-        </AccordionItem>*/}
-      </Accordion>
+      <div className="*:px-3 lg:*:px-8 pb-6">
+        <div className="py-3 space-y-6">
+          <div>
+            <h3 className="text-sm font-medium uppercase font-mono">
+              Image Filters
+            </h3>
+          </div>
+          <EPICImageFilters
+            currentType={currentType}
+            currentDate={currentDate}
+            availableDates={availableDates}
+          />
+        </div>
+        <Separator />
+        <div className="py-3 space-y-6">
+          <div>
+            <h3 className="text-sm font-medium uppercase font-mono">
+              Viewer Modes
+            </h3>
+          </div>
+          <EPICViewerModes
+            viewerMode={viewerMode}
+            setViewerModeAction={setViewerMode}
+            gridSize={gridSize}
+            setGridSizeAction={setGridSize}
+          />
+        </div>
+      </div>
     </aside>
   );
 }

@@ -12,12 +12,11 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { NeoObject } from "@/lib/nasa/types";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Plus } from "@hugeicons/core-free-icons";
 import { motion, AnimatePresence } from "motion/react";
 import { format } from "date-fns-tz";
 import AsteroidSizeChart from "./asteroid-size-chart";
 import { parse } from "date-fns";
+import { RiAddLine } from "@remixicon/react";
 
 type AsteroidCardProps = {
   neo: NeoObject;
@@ -133,9 +132,7 @@ export function AsteroidCard({
             }
             className="cursor-pointer"
           >
-            <HugeiconsIcon
-              icon={Plus}
-              size={24}
+            <RiAddLine
               className={cn(
                 "transition-transform duration-200",
                 overlayOpen && "rotate-45 transition-transform",

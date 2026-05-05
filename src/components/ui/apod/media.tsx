@@ -29,6 +29,7 @@ export default function APODMedia({
             alt={title}
             width={1024}
             height={500}
+            preload
             className="h-auto"
             placeholder="blur"
             fetchPriority="high"

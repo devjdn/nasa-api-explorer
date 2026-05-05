@@ -5,7 +5,7 @@ import * as React from "react";
 import EPICControlSidebar from "./sidebar/control-sidebar";
 import EPICViewerGallery from "./images/gallery";
 import { cn } from "@/lib/utils";
-import EPICViewerSlideshow from "./images/slideshow";
+import EPICViewerSlideshow from "./images/slideshow/slideshow";
 
 export type EPICViewerProps = {
   images: Array<EpicImage>;
@@ -26,11 +26,12 @@ export default function EPICViewer({
   const [viewerMode, setViewerMode] = React.useState<ViewerModes>("slideshow");
   const [imageIndex, setImageIndex] = React.useState(0);
   const [gridSize, setGridSize] = React.useState<GridSizeOptions>("sm");
-  const activeImage = images[imageIndex] ?? images[0];
+  const clampedIndex = Math.min(imageIndex, images.length - 1);
 
-  React.useEffect(() => {
-    setImageIndex(0);
-  }, [currentDate, currentType]);
+  const activeImage = React.useMemo(
+    () => images[clampedIndex] ?? images[0],
+    [images, clampedIndex],
+  );
 
   return (
     <div
@@ -53,6 +54,7 @@ export default function EPICViewer({
           <EPICViewerSlideshow
             currentType={currentType}
             activeImage={activeImage}
+            activeIndex={clampedIndex}
             images={images}
             setActiveImage={setImageIndex}
           />

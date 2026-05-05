@@ -64,6 +64,7 @@ export default async function EPICPage({ searchParams }: EpicPageProps) {
       <Separator />
 
       <EPICViewer
+        key={`${type}-${date}`}
         images={images}
         currentType={type}
         currentDate={date}
