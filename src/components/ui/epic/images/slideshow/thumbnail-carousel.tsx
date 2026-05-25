@@ -1,7 +1,6 @@
 "use client";
-
-import type { EpicImage } from "@/lib/EPIC/types";
-import { epicClient } from "@/lib/EPIC/client";
+import type { EpicImage, EpicImageType } from "@/lib/EPIC/types";
+import { buildEpicImageUrl } from "@/lib/EPIC/helpers";
 import Image from "next/image";
 import {
   Carousel,
@@ -10,21 +9,22 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import type { EPICViewerProps } from "../../viewer";
 import clsx from "clsx";
 
-type EPICViewerThumbailCarouselProps = Pick<EPICViewerProps, "currentType"> & {
+type EPICViewerThumbnailCarouselProps = {
   images: EpicImage[];
+  currentType: EpicImageType;
   activeIndex: number;
-  onSelect: (index: number) => void;
+  onSelectAction: (index: number) => void;
 };
 
+// and in the component:
 export default function EPICViewerThumbnailCarousel({
   images,
   currentType,
   activeIndex,
-  onSelect,
-}: EPICViewerThumbailCarouselProps) {
+  onSelectAction,
+}: EPICViewerThumbnailCarouselProps) {
   return (
     <Carousel
       className="w-full h-full grid grid-cols-[auto_1fr_auto]"
@@ -46,19 +46,15 @@ export default function EPICViewerThumbnailCarousel({
             key={image.identifier}
           >
             <button
-              onClick={() => onSelect(i)}
+              onClick={() => onSelectAction(i)}
               className="h-full cursor-pointer relative isolate aspect-square object-center object-cover"
             >
               <Image
-                src={epicClient.buildImageUrl(
-                  currentType,
-                  image.image,
-                  image.date,
-                )}
+                src={buildEpicImageUrl(currentType, image.image, image.date)}
                 alt={image.caption}
                 width={96}
                 height={96}
-                className=" z-1"
+                className="z-1"
                 unoptimized
               />
               <div

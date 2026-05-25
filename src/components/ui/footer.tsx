@@ -74,7 +74,7 @@ export default function Footer() {
             Data provided by NASA Open APIs. This project is not affiliated with
             or endorsed by NASA.
           </p>
-          <p>© {new Date().getFullYear()} Stargazer</p>
+          <p>© 2026 Stargazer</p>
         </div>
       </div>
     </footer>

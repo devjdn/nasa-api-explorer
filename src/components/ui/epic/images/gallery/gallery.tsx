@@ -2,10 +2,10 @@
 
 import { format } from "date-fns";
 import type { EpicImage, EpicImageType } from "@/lib/EPIC/types";
-import { epicClient } from "@/lib/EPIC/client";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { GridSizeOptions } from "../viewer";
+import type { GridSizeOptions } from "@/components/ui/epic/viewer-context";
+import { buildEpicImageUrl } from "@/lib/EPIC/helpers";
 
 type EPICGalleryProps = {
   images: EpicImage[];
@@ -46,11 +46,7 @@ export default function EPICViewerGallery({
         )}
       >
         {images.map((image) => {
-          const imageUrl = epicClient.buildImageUrl(
-            type,
-            image.image,
-            image.date,
-          );
+          const imageUrl = buildEpicImageUrl(type, image.image, image.date);
 
           const dateObj = new Date(image.date);
 

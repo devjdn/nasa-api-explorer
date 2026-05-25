@@ -1,13 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { epicClient } from "@/lib/EPIC/client";
+import { buildEpicImageUrl } from "@/lib/EPIC/helpers";
 import { EpicImage } from "@/lib/EPIC/types";
 import Image from "next/image";
-import { EPICViewerProps } from "../../viewer";
+import { type EpicImageType } from "@/lib/EPIC/types";
 import { Separator } from "../../../separator";
 import dynamic from "next/dynamic";
-import EPICViewerSlideshowStage from "./stage";
+import EPICViewerSlideshowStage, { StageSkeleton } from "./stage";
 const EPICViewerThumbnailCarousel = dynamic(
   () => import("./thumbnail-carousel"),
   {
@@ -16,10 +16,11 @@ const EPICViewerThumbnailCarousel = dynamic(
   },
 );
 
-type EPICViewerSlideshowProps = Pick<EPICViewerProps, "currentType"> & {
+type EPICViewerSlideshowProps = {
+  currentType: EpicImageType;
   activeImage: EpicImage;
   activeIndex: number;
-  setActiveImage: React.Dispatch<React.SetStateAction<number>>;
+  setActiveImageAction: (index: number) => void;
   images: Array<EpicImage>;
 };
 
@@ -27,7 +28,7 @@ export default function EPICViewerSlideshow({
   currentType,
   activeImage,
   activeIndex,
-  setActiveImage,
+  setActiveImageAction,
   images,
 }: EPICViewerSlideshowProps) {
   return (
@@ -36,7 +37,7 @@ export default function EPICViewerSlideshow({
       {images.map((image) => (
         <Image
           key={image.identifier}
-          src={epicClient.buildImageUrl(currentType, image.image, image.date)}
+          src={buildEpicImageUrl(currentType, image.image, image.date)}
           alt=""
           width={0}
           height={800}
@@ -46,13 +47,15 @@ export default function EPICViewerSlideshow({
         />
       ))}
 
-      <EPICViewerSlideshowStage
-        currentType={currentType}
-        activeImage={activeImage}
-        activeIndex={activeIndex}
-        totalImages={images.length}
-        setActiveImage={setActiveImage}
-      />
+      <React.Suspense fallback={<StageSkeleton />}>
+        <EPICViewerSlideshowStage
+          currentType={currentType}
+          activeImage={activeImage}
+          activeIndex={activeIndex}
+          totalImages={images.length}
+          setActiveImageAction={setActiveImageAction}
+        />
+      </React.Suspense>
 
       <Separator />
 
@@ -61,7 +64,7 @@ export default function EPICViewerSlideshow({
           images={images}
           currentType={currentType}
           activeIndex={activeIndex}
-          onSelect={setActiveImage}
+          onSelectAction={setActiveImageAction}
         />
       </div>
     </div>

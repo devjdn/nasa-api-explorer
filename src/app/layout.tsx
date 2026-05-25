@@ -5,6 +5,7 @@ import Header from "@/components/ui/header/header";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/ui/footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Suspense } from "react";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -43,7 +44,9 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TooltipProvider>
-            <Header />
+            <Suspense fallback={null}>
+              <Header />
+            </Suspense>
             <div className="px-3 lg:px-8 flex-1 flex flex-col">{children}</div>
             <Footer />
           </TooltipProvider>

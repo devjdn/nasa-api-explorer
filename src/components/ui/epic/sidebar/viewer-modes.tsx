@@ -1,31 +1,17 @@
 "use client";
+
 import { Button } from "../../button";
-import { GridSizeOptions, ViewerModes } from "../viewer";
+import { useEPICViewer } from "../viewer-context";
 import {
   RiSquareLine,
   RiLayoutGridLine,
   RiLayoutGrid2Line,
 } from "@remixicon/react";
-import * as React from "react";
 
-type ViewerModeProps = {
-  viewerMode: ViewerModes;
-  setViewerModeAction: (mode: ViewerModes) => void;
-  gridSize: GridSizeOptions;
-  setGridSizeAction: (size: GridSizeOptions) => void;
-};
-const viewerModeTypes: ViewerModes[] = ["slideshow", "gallery"];
-export default function EPICViewerModes({
-  viewerMode,
-  setViewerModeAction,
-  gridSize,
-  setGridSizeAction,
-}: ViewerModeProps) {
-  const [isMounted, setIsMounted] = React.useState(false);
+const viewerModeTypes = ["slideshow", "gallery"] as const;
 
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
+export default function EPICViewerModes() {
+  const { viewerMode, setViewerMode, gridSize, setGridSize } = useEPICViewer();
 
   return (
     <div className="space-y-6">
@@ -37,7 +23,7 @@ export default function EPICViewerModes({
           {viewerModeTypes.map((type) => (
             <Button
               key={type}
-              onClick={() => setViewerModeAction(type)}
+              onClick={() => setViewerMode(type)}
               size={"sm"}
               variant={viewerMode === type ? "default" : "secondary"}
             >
@@ -52,26 +38,26 @@ export default function EPICViewerModes({
         </p>
         <div className="flex flex-row items-center gap-2">
           <Button
-            onClick={() => setGridSizeAction("sm")}
+            onClick={() => setGridSize("sm")}
             size={"sm"}
             variant={gridSize === "sm" ? "default" : "secondary"}
-            disabled={isMounted && viewerMode === "slideshow"}
+            disabled={viewerMode === "slideshow"}
           >
             <RiSquareLine />
           </Button>
           <Button
-            onClick={() => setGridSizeAction("default")}
+            onClick={() => setGridSize("default")}
             size={"sm"}
             variant={gridSize === "default" ? "default" : "secondary"}
-            disabled={isMounted && viewerMode === "slideshow"}
+            disabled={viewerMode === "slideshow"}
           >
             <RiLayoutGridLine />
           </Button>
           <Button
-            onClick={() => setGridSizeAction("lg")}
+            onClick={() => setGridSize("lg")}
             size={"sm"}
             variant={gridSize === "lg" ? "default" : "secondary"}
-            disabled={isMounted && viewerMode === "slideshow"}
+            disabled={viewerMode === "slideshow"}
           >
             <RiLayoutGrid2Line />
           </Button>

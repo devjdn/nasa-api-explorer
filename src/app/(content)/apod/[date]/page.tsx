@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { nasaClient } from "@/lib/nasa/client";
-import APODPageContent from "@/components/ui/apod/page-content";
-import ErrorView from "@/components/ui/response-states/error-view";
+import { getAPODByDate } from "@/lib/nasa/client";
+import { Suspense } from "react";
+import APODDatePageContent from "@/components/ui/apod/date-page-shell";
+import { APODSkeleton } from "@/components/ui/apod/skeletons";
 
 type Props = {
   params: Promise<{
@@ -11,7 +12,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { date } = await params;
-  const apod = await nasaClient.getAPODByDate(date);
+  const apod = await getAPODByDate(date);
 
   if (!apod.ok) return {};
 
@@ -22,11 +23,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function APODPage({ params }: Props) {
-  const { date } = await params;
-  const apod = await nasaClient.getAPODByDate(date);
-  // console.log(apod);
-
-  if (!apod.ok) return <ErrorView error={apod.error} />;
-
-  return <APODPageContent apod={apod.data} />;
+  return (
+    <Suspense fallback={<APODSkeleton />}>
+      <APODDatePageContent params={params} />
+    </Suspense>
+  );
 }

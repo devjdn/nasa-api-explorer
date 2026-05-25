@@ -1,5 +1,6 @@
 "use client";
 
+import { useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Popover, PopoverTrigger, PopoverContent } from "../../popover";
 import { EPIC_IMAGE_TYPES, type EpicImageType } from "@/lib/EPIC/types";
@@ -22,6 +23,7 @@ export default function EPICImageFilters({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   function handleTypeChange(newType: EpicImageType) {
     const params = new URLSearchParams(searchParams.toString());
@@ -29,7 +31,9 @@ export default function EPICImageFilters({
     params.set("type", newType);
     params.delete("date");
 
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    });
   }
 
   function handleDateChange(newDate: string) {
@@ -37,7 +41,9 @@ export default function EPICImageFilters({
 
     params.set("date", newDate);
 
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    });
   }
 
   const selectedDate = new Date(currentDate);

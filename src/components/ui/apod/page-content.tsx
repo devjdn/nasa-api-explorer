@@ -1,24 +1,20 @@
 import type { ApodResponse } from "@/lib/nasa/types";
 import { format, parseISO } from "date-fns";
-import {
-  PageEyebrow,
-  PageTitle,
-  SubsectionTitle,
-} from "@/components/ui/typography";
-import APODDetails from "@/components/ui/apod/details";
-import APODMedia from "@/components/ui/apod/media";
+import APODMedia from "@/components/ui/apod/media/media";
 import { Separator } from "@/components/ui/separator";
+import { APODHeader } from "./header";
+import { APODExplanation } from "./explanation";
 
 export default function APODPageContent({ apod }: { apod: ApodResponse }) {
   return (
-    <div className="space-y-8 *:not-data-[slot=separator]:px-3 *:not-data-[slot=separator]:lg:px-8">
-      <div className="space-y-6">
-        <PageEyebrow>Astronomy Picture of the Day</PageEyebrow>
-        <PageTitle>{apod.title}</PageTitle>
-        <APODDetails date={apod.date} media_type={apod.media_type} />
-      </div>
+    <div className="">
+      <APODHeader
+        title={apod.title}
+        date={apod.date}
+        media_type={apod.media_type}
+      />
 
-      <Separator />
+      <Separator className="mt-8 mb-0" />
 
       <APODMedia
         title={apod.title}
@@ -29,12 +25,9 @@ export default function APODPageContent({ apod }: { apod: ApodResponse }) {
         media_type={apod.media_type}
       />
 
-      <Separator />
+      <Separator className="my-8" />
 
-      <div className="space-y-4">
-        <SubsectionTitle as="h2">Explanation</SubsectionTitle>
-        <p className="text-base text-muted-foreground">{apod.explanation}</p>
-      </div>
+      <APODExplanation explanation={apod.explanation} />
     </div>
   );
 }

@@ -52,12 +52,12 @@ export default function ObjectSection({ neo }: { neo: NeoObject[] }) {
       const aTime = parse(
         aApproach.close_approach_date_full,
         "yyyy-MMM-dd HH:mm",
-        new Date(),
+        new Date(0),
       ).getTime();
       const bTime = parse(
         bApproach.close_approach_date_full,
         "yyyy-MMM-dd HH:mm",
-        new Date(),
+        new Date(0),
       ).getTime();
 
       const aDiameter =

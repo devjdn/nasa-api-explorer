@@ -70,7 +70,7 @@ export function AsteroidCard({
               parse(
                 neo.close_approach_data[0].close_approach_date_full,
                 "yyyy-MMM-dd HH:mm",
-                new Date(),
+                new Date(0),
               ),
               "HH:mm 'UTC'",
               { timeZone: "UTC" },
