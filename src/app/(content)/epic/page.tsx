@@ -16,11 +16,6 @@ export const metadata: Metadata = {
 };
 
 export default async function EPICPage({ searchParams }: EpicPageProps) {
-  const imageParams = searchParams.then((params) => ({
-    type: params.type,
-    date: params.date,
-  }));
-
   return (
     <div className="@container border-x">
       <div className="px-3 lg:px-8 pb-8 space-y-6">
@@ -31,7 +26,7 @@ export default async function EPICPage({ searchParams }: EpicPageProps) {
       <Separator />
 
       <Suspense fallback={<div>Loading...</div>}>
-        <EPICViewer imageParams={imageParams} />
+        <EPICViewer imageParams={searchParams} />
       </Suspense>
 
       <Separator className="mb-8" />
