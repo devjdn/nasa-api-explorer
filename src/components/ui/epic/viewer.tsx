@@ -19,16 +19,14 @@ export default async function EPICViewer({ imageParams }: EPICViewerProps) {
     ? (type as EpicImageType)
     : "natural";
 
-  const dateParam = date;
-
   return (
     <div className="flex flex-col lg:grid lg:grid-cols-[300px_1fr]">
       <Suspense fallback={<EPICControlSidebarSkeleton />}>
-        <EPICSidebarShell type={imageType} dateParam={dateParam} />
+        <EPICSidebarShell type={imageType} dateParam={date} />
       </Suspense>
 
       <Suspense fallback={<div>Loading images...</div>}>
-        <EPICImagesShell type={imageType} dateParam={dateParam} />
+        <EPICImagesShell type={imageType} dateParam={date} />
       </Suspense>
     </div>
   );

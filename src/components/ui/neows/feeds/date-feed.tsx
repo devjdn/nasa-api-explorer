@@ -16,12 +16,12 @@ export default async function DateFeed({
   if (!neows.ok) return notFound();
 
   return (
-    <>
+    <div>
       <div className="px-3 py-8 lg:px-8">
         <SectionTitle>{formattedDate} Overview</SectionTitle>
       </div>
       <Separator />
       <NeoFeed neo={neows.data} />
-    </>
+    </div>
   );
 }

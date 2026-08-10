@@ -47,6 +47,15 @@
     --radius-2xl: calc(var(--radius) + 8px);
     --radius-3xl: calc(var(--radius) + 12px);
     --radius-4xl: calc(var(--radius) + 16px);
+
+    --tracking-display-thin: 0.02em;
+    --tracking-display-extralight: 0.01em;
+    --tracking-display-light: 0em;
+    --tracking-display-regular: -0.01em;
+    --tracking-display-medium: -0.02em;
+    --tracking-display-semibold: -0.025em;
+    --tracking-display-bold: -0.03em;
+    --tracking-display-black: -0.035em;
 }
 
 :root {
@@ -117,7 +126,7 @@
     --sidebar-primary: oklch(0.488 0.243 264.376);
     --sidebar-primary-foreground: oklch(0.985 0 0);
     --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.439 0 0);
 }
@@ -127,8 +136,37 @@
         @apply border-border outline-ring/50;
     }
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground font-sans;
+        font-feature-settings: "zero" 1;
     }
+}
+
+@utility font-display {
+    font-family: var(--font-inter);
+    letter-spacing: var(--tracking-display, -0.02em);
+    line-height: 1.1;
+}
+
+@utility tracking-display-thin {
+    --tracking-display: var(--tracking-display-thin);
+}
+@utility tracking-display-light {
+    --tracking-display: var(--tracking-display-light);
+}
+@utility tracking-display-normal {
+    --tracking-display: var(--tracking-display-normal);
+}
+@utility tracking-display-medium {
+    --tracking-display: var(--tracking-display-medium);
+}
+@utility tracking-display-semibold {
+    --tracking-display: var(--tracking-display-semibold);
+}
+@utility tracking-display-bold {
+    --tracking-display: var(--tracking-display-bold);
+}
+@utility tracking-display-black {
+    --tracking-display: var(--tracking-display-black);
 }
 
 @layer utilities {

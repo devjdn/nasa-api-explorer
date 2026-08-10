@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useTransition, useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Popover, PopoverTrigger, PopoverContent } from "../../popover";
 import { EPIC_IMAGE_TYPES, type EpicImageType } from "@/lib/EPIC/types";
@@ -47,13 +47,18 @@ export default function EPICImageFilters({
   }
 
   const selectedDate = new Date(currentDate);
-  const timestamps = availableDates.map((d) => new Date(d).getTime());
-  const availableDateSet = new Set(
-    availableDates.map((d) => format(new Date(d), "yyyy-MM-dd")),
-  );
+  const { MIN_DATE, MAX_DATE, availableDateSet } = useMemo(() => {
+    const timestamps = availableDates.map((d) => new Date(d).getTime());
+    const dateSet = new Set(
+      availableDates.map((d) => format(new Date(d), "yyyy-MM-dd")),
+    );
 
-  const MIN_DATE = new Date(Math.min(...timestamps));
-  const MAX_DATE = new Date(Math.max(...timestamps));
+    return {
+      MIN_DATE: new Date(Math.min(...timestamps)),
+      MAX_DATE: new Date(Math.max(...timestamps)),
+      availableDateSet: dateSet,
+    };
+  }, [availableDates]);
   // console.log("currentDate:", currentDate);
   // console.log("selectedDate:", selectedDate);
   // console.log("MIN_DATE:", MIN_DATE);
@@ -71,9 +76,11 @@ export default function EPICImageFilters({
               key={type}
               onClick={() => handleTypeChange(type)}
               size={"sm"}
+              // If this specific transition is running, change the button's appearance immediately
+              disabled={isPending}
               variant={type === currentType ? "default" : "secondary"}
             >
-              {type}
+              {isPending && type === currentType ? "Loading..." : type}
             </Button>
           ))}
         </div>

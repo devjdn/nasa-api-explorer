@@ -6,14 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "doctor": "npx react-doctor@latest"
   },
-  "pnpm": {
-    "overrides": {
-      "zod": "4.3.6",
-      "@types/react": "19.2.14",
-      "@types/react-dom": "19.2.3"
-    }
+  "overrides": {
+    "zod": "4.3.6",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

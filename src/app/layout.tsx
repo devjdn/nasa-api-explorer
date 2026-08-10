@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Inter_Tight, IBM_Plex_Mono } from "next/font/google";
+import { Inter_Tight, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/header/header";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/ui/footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Suspense } from "react";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
+import localFont from "next/font/local";
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
