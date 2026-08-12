@@ -8,10 +8,10 @@ export default function NeoWsTemplate({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border-x">
+    <div className="flex-1 flex flex-col max-w-400 mx-auto w-full border-x">
       <ControlPanelSlot panel={"neows"} />
 
-      <div className="space-y-6 pb-8 px-3 lg:px-8">
+      <div className="space-y-6 py-8 px-3 lg:px-8">
         <p className="font-mono text-[0.65rem] lg:text-xs uppercase tracking-[0.35em] text-orange-500">
           NeoWs
         </p>

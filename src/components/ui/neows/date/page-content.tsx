@@ -28,7 +28,7 @@ export default async function NeoWsPageContent({
   return (
     <div className="@container">
       <section className="">
-        <div className="pb-8 px-3 lg:px-8">
+        <div className="py-8 px-3 lg:px-8">
           <SectionTitle>{formattedDate} Overview</SectionTitle>
         </div>
 

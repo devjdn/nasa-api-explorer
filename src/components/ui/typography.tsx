@@ -73,7 +73,7 @@ export const SubsectionTitle = React.forwardRef<
 >(({ as: Tag = "h3", className, ...props }, ref) => (
   <Tag
     ref={ref}
-    className={cn("font-display font-medium text-lg lg:text-xl", className)}
+    className={cn("font-display font-semibold text-lg lg:text-xl", className)}
     {...props}
   />
 ));

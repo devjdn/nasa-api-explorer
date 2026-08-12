@@ -17,7 +17,7 @@ type APODHeaderProps = {
 
 export function APODHeader({ title, date, media_type }: APODHeaderProps) {
   return (
-    <div className="space-y-6 px-3 lg:px-8">
+    <header className="space-y-6 px-3 lg:px-8 pb-8">
       <PageEyebrow>Astronomy Picture of the Day</PageEyebrow>
 
       <PageTitle>{title}</PageTitle>
@@ -47,6 +47,6 @@ export function APODHeader({ title, date, media_type }: APODHeaderProps) {
           <span>{format(parseISO(date), "do MMMM yyyy")}</span>
         </Badge>
       </div>
-    </div>
+    </header>
   );
 }

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import ShareActions from "../../share/share-actions";
 import APODImageModal from "./image-modal";
 import { Separator } from "../../separator";
 
@@ -23,7 +22,7 @@ export default function APODMedia({
   const isDirectVideo = /\.(mp4|webm|mov)$/i.test(url);
 
   return (
-    <div className="w-full px-0" data-component="media">
+    <div className="w-full pb-8" data-component="media">
       <div className="w-full aspect-3/2 relative border-b">
         {media_type === "image" ? (
           <Image
@@ -76,13 +75,6 @@ export default function APODMedia({
           {copyright ??
             "No listed copyright holder (May be visible in the media)"}
         </p>
-        <ShareActions
-          title={title}
-          date={date}
-          copyright={copyright ?? undefined}
-          externalUrl={url}
-          mediaUrl={media_type === "image" ? (hdurl ?? url) : undefined}
-        />
       </div>
     </div>
   );

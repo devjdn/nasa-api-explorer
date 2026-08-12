@@ -7,14 +7,14 @@ import { APODExplanation } from "./explanation";
 
 export default function APODPageContent({ apod }: { apod: ApodResponse }) {
   return (
-    <div className="">
+    <div className="py-8">
       <APODHeader
         title={apod.title}
         date={apod.date}
         media_type={apod.media_type}
       />
 
-      <Separator className="mt-8 mb-0" />
+      <Separator />
 
       <APODMedia
         title={apod.title}
@@ -25,7 +25,7 @@ export default function APODPageContent({ apod }: { apod: ApodResponse }) {
         media_type={apod.media_type}
       />
 
-      <Separator className="my-8" />
+      <Separator />
 
       <APODExplanation explanation={apod.explanation} />
     </div>

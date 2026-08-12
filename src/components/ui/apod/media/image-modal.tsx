@@ -28,7 +28,7 @@ export default function APODImageModal({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full" variant="secondary">
+        <Button className="w-full" variant="ghost">
           <RiFullscreenLine />
           <span>Click to view fullscreen</span>
         </Button>

@@ -45,34 +45,11 @@ export default function ControlPanel({ apiName }: ControlPanelProps) {
     hasInitialised.current = true;
   }, [isMobile, setOpen]);
 
-  // React.useEffect(() => {
-  //   function handlePointerOutside(event: PointerEvent) {
-  //     if (!panelRef.current) return;
-
-  //     const target = event.target as HTMLElement;
-
-  //     if (
-  //       panelRef.current.contains(target) ||
-  //       target.closest("[data-control-panel-safe]") // this is for elements with a data attribute to mark it safe for the control panel
-  //     ) {
-  //       return;
-  //     }
-
-  //     setOpen(false);
-  //   }
-
-  //   document.addEventListener("pointerdown", handlePointerOutside);
-
-  //   return () => {
-  //     document.removeEventListener("pointerdown", handlePointerOutside);
-  //   };
-  // }, [setOpen]);
-
   return (
-    <div className="flex justify-end sticky bottom-3 md:bottom-8 @container z-30 pointer-events-none">
+    <div className="flex justify-end fixed w-xs bottom-3 md:bottom-8 @container z-30 pointer-events-none">
       <div
         ref={panelRef}
-        className="relative max-w-sm w-full bg-card flex flex-col-reverse select-none md:right-8 border-y @md:border-l md:border-r corner-caps shadow-lg pointer-events-auto"
+        className="relative max-w-sm w-full bg-card flex flex-col-reverse select-none md:right-8 border-y border corner-caps shadow-lg pointer-events-auto"
       >
         <div className="p-3 flex justify-between items-center gap-4">
           <span className="inline-flex items-center gap-2">
