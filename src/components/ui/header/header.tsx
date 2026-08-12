@@ -10,7 +10,7 @@ import { NASA_APIS } from "@/lib/nasa-apis";
 export default function Header() {
   const pathname = usePathname();
   return (
-    <header className="sticky top-0 flex justify-between items-center z-50 px-3 lg:px-8 h-14 lg:grid lg:grid-cols-[180px_1fr_180px] bg-background border-b">
+    <header className="sticky top-0 flex justify-between items-center z-50 px-3 md:px-8 h-14 lg:grid md:grid-cols-[180px_1fr_180px] bg-background border-b">
       <div className="justify-self-start place-self-center">
         <Link className="group" href={"/"}>
           <div className="">
@@ -21,7 +21,7 @@ export default function Header() {
         </Link>
       </div>
 
-      <nav className="hidden lg:flex place-self-center">
+      <nav className="hidden md:flex place-self-center">
         <ul className="flex gap-6">
           {NASA_APIS.map((api, i) => (
             <li className="font-mono w-fit" key={api.href}>
@@ -45,10 +45,10 @@ export default function Header() {
           ))}
         </ul>
       </nav>
-      <div className="justify-self-stretch self-center hidden lg:block">
+      <div className="justify-self-stretch self-center hidden md:block">
         <ThemeSwitcher />
       </div>
-      <div className="justify-self-end block lg:hidden">
+      <div className="justify-self-end block md:hidden">
         <MobileNav />
       </div>
     </header>

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default async function EPICPage({ searchParams }: EpicPageProps) {
   return (
-    <main className="@container border-x flex-1 flex flex-col">
+    <main className="@container flex-1 flex flex-col">
       <div className="px-3 lg:px-8 py-8 space-y-6">
         <PageEyebrow>EPIC</PageEyebrow>
         <PageTitle>Earth Polychromatic Imaging Camera</PageTitle>

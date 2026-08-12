@@ -8,7 +8,7 @@ export default function APODLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="max-w-7xl mx-auto w-full flex-1 flex flex-col md:grid md:grid-cols-[1fr_300px] border-x">
+    <div className="flex-1 flex flex-col md:grid md:grid-cols-[1fr_350px] not-md:gap-y-8 md:gap-x-8">
       <ControlPanelSlot panel={"apod"} />
 
       {children}
@@ -16,6 +16,6 @@ export default function APODLayout({
       <APODDiscoverySidebar />
 
       <ControlPanel />
-    </main>
+    </div>
   );
 }

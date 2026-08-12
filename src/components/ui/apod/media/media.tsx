@@ -23,7 +23,7 @@ export default function APODMedia({
 
   return (
     <div className="w-full pb-8" data-component="media">
-      <div className="w-full aspect-3/2 relative border-b">
+      <div className="w-full aspect-3/2 relative">
         {media_type === "image" ? (
           <Image
             src={url}
@@ -58,14 +58,14 @@ export default function APODMedia({
         )}
       </div>
 
-      <APODImageModal
+      {/*<APODImageModal
         key={hdurl ?? url}
         title={title}
         url={hdurl ?? url}
         hdurl={hdurl ?? undefined}
         media_type={media_type}
         isDirectVideo={isDirectVideo}
-      />
+      />*/}
 
       <Separator className="mb-8" />
 

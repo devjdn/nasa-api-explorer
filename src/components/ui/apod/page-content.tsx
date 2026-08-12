@@ -7,7 +7,7 @@ import { APODExplanation } from "./explanation";
 
 export default function APODPageContent({ apod }: { apod: ApodResponse }) {
   return (
-    <div className="py-8">
+    <div className="py-8 md:border-r not-md:border-b">
       <APODHeader
         title={apod.title}
         date={apod.date}

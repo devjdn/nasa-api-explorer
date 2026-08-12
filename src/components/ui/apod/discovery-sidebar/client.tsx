@@ -7,6 +7,7 @@ import { Separator } from "../../separator";
 import { Button } from "../../button";
 import { RefreshCwIcon } from "lucide-react";
 import clsx from "clsx";
+import { Skeleton } from "../../skeleton";
 
 async function fetchRandomApods(): Promise<ApiResult<ApodResponse[]>> {
   const res = await fetch("/api/apod/random");
@@ -34,7 +35,9 @@ export default function APODDiscoverySidebarClient() {
       <Separator />
 
       {isPending ? (
-        <div>Loading...</div>
+        Array.from({ length: 6 }).map((_, i) => (
+          <Skeleton key={i} className="aspect-3/2 border-b" />
+        ))
       ) : (
         <div className="flex flex-col">
           {data?.ok &&

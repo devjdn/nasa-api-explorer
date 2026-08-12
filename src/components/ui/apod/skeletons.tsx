@@ -12,7 +12,7 @@ import { Button } from "../button";
 
 export function APODSkeleton() {
   return (
-    <div className="">
+    <div className="py-8 border-r">
       {/* Header */}
       <APODHeaderSkeleton />
 
@@ -32,10 +32,12 @@ export function APODSkeleton() {
 export function APODHeaderSkeleton() {
   return (
     <div className="space-y-6 px-3 lg:px-8">
-      <PageEyebrow>Astronomy Picture of the Day</PageEyebrow>
-      <Skeleton className="h-9 lg:h-10 w-2/3" />
+      <div className="space-y-4 text-center">
+        <PageEyebrow>Astronomy Picture of the Day</PageEyebrow>
+        <Skeleton className="h-9 lg:h-10 w-2/3 mx-auto" />
+      </div>
 
-      <div className="flex gap-1 flex-wrap">
+      <div className="flex gap-1 flex-wrap justify-center">
         <Badge variant="secondary">
           <RiFileUnknowLine />
           <span>Media type</span>
@@ -56,10 +58,10 @@ export function APODMediaSkeleton() {
       {/* Image */}
       <Skeleton className="w-full aspect-3/2 border-b" />
 
-      <Button className="w-full" variant="secondary">
+      {/*<Button className="w-full" variant="secondary">
         <RiFullscreenLine />
         <span>Click to view fullscreen</span>
-      </Button>
+      </Button>*/}
 
       <Separator className="mb-8" />
 

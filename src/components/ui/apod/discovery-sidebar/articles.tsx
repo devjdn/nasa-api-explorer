@@ -24,7 +24,7 @@ export default function APODDiscoveryArticles({
 }: APODDiscoveryArticlesProps) {
   return (
     <Link href={`/apod/${date}`} className="group">
-      <article className="md:border-b space-y-3 pt-3 px-3 pb-8 not-md:group-not-last:border-b group-hover:bg-accent dark:group-hover:bg-accent/20 transition-colors">
+      <article className="md:border-b space-y-3 pt-3 px-3 pb-8 not-md:group-not-last:border-b transition-colors">
         {image_url && (
           <div className="relative aspect-video">
             <Image
@@ -38,7 +38,9 @@ export default function APODDiscoveryArticles({
         )}
 
         <div className="flex flex-col gap-4">
-          <span className="font-semibold tracking-display-medium">{title}</span>
+          <span className="font-semibold group-hover:underline tracking-display-medium">
+            {title}
+          </span>
 
           <div className="flex gap-1 flex-wrap">
             <Badge variant="secondary">

@@ -17,12 +17,14 @@ type APODHeaderProps = {
 
 export function APODHeader({ title, date, media_type }: APODHeaderProps) {
   return (
-    <header className="space-y-6 px-3 lg:px-8 pb-8">
-      <PageEyebrow>Astronomy Picture of the Day</PageEyebrow>
+    <header className="space-y-6 px-3 lg:px-8 pb-8 text-center">
+      <div className="space-y-4">
+        <PageEyebrow>Astronomy Picture of the Day</PageEyebrow>
 
-      <PageTitle>{title}</PageTitle>
+        <PageTitle>{title}</PageTitle>
+      </div>
 
-      <div className="flex gap-1 flex-wrap">
+      <div className="flex gap-1 flex-wrap justify-center">
         <Badge variant="secondary">
           {media_type === "image" ? (
             <>
