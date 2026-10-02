@@ -6,8 +6,7 @@ type ImageProps = {
   title: string;
   date: string;
   copyright?: string;
-  url: string;
-  hdurl?: string;
+  hdurl: string;
   media_type: "image" | "video";
 };
 
@@ -15,25 +14,24 @@ export default function APODMedia({
   title,
   date,
   copyright,
-  url,
   hdurl,
   media_type,
 }: ImageProps) {
-  const isDirectVideo = /\.(mp4|webm|mov)$/i.test(url);
+  const isDirectVideo = /\.(mp4|webm|mov)$/i.test(hdurl);
 
   return (
     <div className="w-full pb-8" data-component="media">
       <div className="w-full aspect-3/2 relative">
         {media_type === "image" ? (
           <Image
-            src={url}
+            src={hdurl}
             alt={title}
             preload
             fill
             className="object-center object-contain"
             placeholder="blur"
             fetchPriority="high"
-            blurDataURL={url}
+            blurDataURL={hdurl}
             unoptimized
           />
         ) : (
@@ -44,12 +42,12 @@ export default function APODMedia({
               className="absolute inset-0 w-full h-full"
               preload="metadata"
             >
-              <source src={url} type="video/mp4" />
+              <source src={hdurl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           ) : (
             <iframe
-              src={url}
+              src={hdurl}
               title={title}
               allowFullScreen
               className="absolute inset-0 w-full h-full"
@@ -57,15 +55,6 @@ export default function APODMedia({
           ))
         )}
       </div>
-
-      {/*<APODImageModal
-        key={hdurl ?? url}
-        title={title}
-        url={hdurl ?? url}
-        hdurl={hdurl ?? undefined}
-        media_type={media_type}
-        isDirectVideo={isDirectVideo}
-      />*/}
 
       <Separator className="mb-8" />
 

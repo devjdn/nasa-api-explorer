@@ -15,7 +15,7 @@ export default function Header() {
         <Link className="group" href={"/"}>
           <div className="">
             <p className="text-base font-mono uppercase font-medium">
-              Stargazer <span className="text-orange-500">1.0</span>
+              Stargazer <span className="text-orange-500">1.0.1</span>
             </p>
           </div>
         </Link>

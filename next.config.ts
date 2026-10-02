@@ -7,7 +7,11 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "apod.nasa.gov",
+        hostname: "science.nasa.gov",
+        protocol: "https",
+      },
+      {
+        hostname: "assets.science.nasa.gov",
         protocol: "https",
       },
       {

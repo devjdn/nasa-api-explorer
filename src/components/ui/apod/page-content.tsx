@@ -20,7 +20,6 @@ export default function APODPageContent({ apod }: { apod: ApodResponse }) {
         title={apod.title}
         date={format(parseISO(apod.date), "do MMMM yyyy")}
         copyright={apod.copyright ?? undefined}
-        url={apod.url}
         hdurl={apod.hdurl}
         media_type={apod.media_type}
       />

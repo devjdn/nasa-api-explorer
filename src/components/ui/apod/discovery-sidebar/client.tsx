@@ -47,9 +47,7 @@ export default function APODDiscoverySidebarClient() {
                 title={apod.title}
                 date={apod.date}
                 media_type={apod.media_type}
-                image_url={
-                  apod.media_type === "image" ? apod.url : apod.thumbnail_url
-                }
+                image_url={apod.media_type === "image" ? apod.hdurl : undefined}
               />
             ))}
         </div>

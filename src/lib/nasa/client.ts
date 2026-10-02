@@ -9,7 +9,7 @@ import type {
 
 const NASA_BASE_URL = "https://api.nasa.gov";
 const NASA_API_KEY = process.env.NASA_API_KEY!;
-const APOD_MIRROR_BASE_URL = "https://apod.ellanan.com/api";
+const APOD_URL = "https://science.nasa.gov/wp-json/wp/v2/apod-basic/";
 
 if (!NASA_API_KEY) {
   throw new Error("Missing NASA_API_KEY env variable");
@@ -95,14 +95,13 @@ async function nasaFetch<T>(
   });
 }
 
-// Convenience wrapper: Ella Nan's APOD mirror — no API key required.
-async function mirrorApodFetch<T>(
+async function apodFetch<T>(
   params?: Record<string, string | number | undefined>,
   timeoutMs = 10000,
 ): Promise<ApiResult<T>> {
-  // The mirror's root path is the APOD endpoint itself.
   return apiFetch<T>("/", params, {
-    baseUrl: APOD_MIRROR_BASE_URL,
+    baseUrl: APOD_URL,
+    apiKey: NASA_API_KEY,
     timeoutMs,
   });
 }
@@ -157,34 +156,16 @@ async function withApiResult<T>(fn: () => Promise<T>): Promise<ApiResult<T>> {
 
 // ---------------------------------------------------------------------------
 // APOD Functions
-//
-// Primary source: Ella Nan's mirror (no API key, more stable).
-// Fallback: NASA's own endpoint (requires API key).
 // ---------------------------------------------------------------------------
 
-async function fetchApodWithFallback(
-  params?: Record<string, string | number | undefined>,
-): Promise<ApodResponse> {
-  const mirrorResult = await mirrorApodFetch<ApodResponse>(params);
+function pickEntry(entries: ApodResponse[], date?: string): ApodResponse {
+  const entry = date ? entries.find((e) => e.date === date) : entries[0];
 
-  if (mirrorResult.ok) return mirrorResult.data;
+  if (!entry) {
+    throw new FetchError({ type: "NOT_FOUND", status: 404 });
+  }
 
-  // Mirror failed — fall back to NASA's endpoint.
-  return throwOnFailure(
-    await nasaFetch<ApodResponse>("/planetary/apod", params),
-  );
-}
-
-async function fetchApodArrayWithFallback(
-  params?: Record<string, string | number | undefined>,
-): Promise<ApodResponse[]> {
-  const mirrorResult = await mirrorApodFetch<ApodResponse[]>(params);
-
-  if (mirrorResult.ok) return mirrorResult.data;
-
-  return throwOnFailure(
-    await nasaFetch<ApodResponse[]>("/planetary/apod", params),
-  );
+  return entry;
 }
 
 export async function getTodayAPOD(): Promise<ApiResult<ApodResponse>> {
@@ -194,7 +175,7 @@ export async function getTodayAPOD(): Promise<ApiResult<ApodResponse>> {
     cacheLife("days");
     cacheTag("apod-today");
 
-    return fetchApodWithFallback();
+    return pickEntry(throwOnFailure(await apodFetch<ApodResponse[]>()));
   });
 }
 
@@ -207,12 +188,16 @@ export async function getAPODByDate(
     cacheLife("days");
     cacheTag(`apod-${date}`);
 
-    return fetchApodWithFallback({ date });
+    return pickEntry(
+      throwOnFailure(await apodFetch<ApodResponse[]>({ date })),
+      date,
+    );
   });
 }
 
 export async function getRandomApods(): Promise<ApiResult<ApodResponse[]>> {
-  return withApiResult(() => fetchApodArrayWithFallback({ count: 6 }));
+  const result = await apodFetch<ApodResponse[]>({ count: 6 });
+  return result.ok ? { ok: true, data: result.data.slice(0, 6) } : result;
 }
 
 // ---------------------------------------------------------------------------

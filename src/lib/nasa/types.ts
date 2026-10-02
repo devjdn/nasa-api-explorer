@@ -1,6 +1,5 @@
 export type ApiResult<T> =
-  | { ok: true; data: T }
-  | { ok: false; error: AppError };
+  { ok: true; data: T } | { ok: false; error: AppError };
 
 export type AppError =
   | {
@@ -32,18 +31,19 @@ export type AppError =
 // Descriptions from the official APOD GitHub repo
 
 export interface ApodResponse {
-  resource: string; // A dictionary describing the image_set or planet that the response illustrates, completely determined by the structured endpoint.
-  concept_tags: boolean; // A boolean reflection of the supplied option. Included in response because of default values.
+  date: string; // Date of the APOD entry (YYYY-MM-DD).
+  post_id: number; // The WordPress post ID for the entry.
   title: string; // The title of the image.
-  date: string; // Date of image. Included in response because of default values.
-  url: string; // The URL of the APOD image or video of the day.
-  hdurl?: string; // The URL for any high - resolution image for that day.Returned regardless of 'hd' param setting but will be omitted in the response IF it does not exist originally at APOD.
-  media_type: "image" | "video"; // The type of media (data) returned. May either be 'image' or 'video' depending on content.
-  explanation?: string; // The supplied text explanation of the image.
-  concepts?: string; // The most relevant concepts within the text explanation. Only supplied if concept_tags is set to True.
-  thumbnail_url?: string; // The URL of thumbnail of the video.
-  copyright?: string; // The name of the copyright holder.
-  service_version: string; // The service version used.
+  permalink: string; // Link to the APOD article page on science.nasa.gov.
+  media_type: "image" | "video"; // The type of media for the entry.
+  explanation: string; // The text explanation of the image.
+  credit?: string; // Image credit. May be absent on some entries.
+  copyright?: string; // The copyright holder, if any.
+  alt?: string; // Alt text describing the image.
+  url: string; // URL for the entry. See note below.
+  hdurl: string; // URL of the high-resolution image
+  basic_html: string; // The page content as an HTML string.
+  basic_html_url: string; // URL of the same HTML content via the WP REST API.
 }
 
 // NeoWs types inferred from api.nasa.gov demo API responses
