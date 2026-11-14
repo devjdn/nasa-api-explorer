@@ -1,6 +1,5 @@
-import APODDiscoverySidebar from "@/components/ui/apod/discovery-sidebar/discovery-sidebar";
-import ControlPanel from "@/components/ui/control-panel/control-panel";
-import ControlPanelSlot from "@/components/ui/control-panel/control-panel-slot";
+import APODDiscovery from "@/components/ui/apod/discovery/discovery";
+import { Separator } from "@/components/ui/separator";
 
 export default function APODLayout({
   children,
@@ -8,14 +7,12 @@ export default function APODLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex-1 flex flex-col md:grid md:grid-cols-[1fr_350px] not-md:gap-y-8 md:gap-x-8">
-      <ControlPanelSlot panel={"apod"} />
-
-      {children}
-
-      <APODDiscoverySidebar />
-
-      <ControlPanel />
-    </div>
+    <main className="px-margin pt-block pb-section space-y-section">
+      <div className="space-y-group max-w-5xl mx-auto w-full">
+        {children}
+        <Separator />
+        <APODDiscovery />
+      </div>
+    </main>
   );
 }

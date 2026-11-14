@@ -16,7 +16,7 @@ async function fetchRandomApods(): Promise<ApiResult<ApodResponse[]>> {
   return { ok: true, data };
 }
 
-export default function APODDiscoverySidebarClient() {
+export default function APODDiscoveryClient() {
   const { data, isPending, isFetching, refetch } = useQuery({
     queryKey: ["apod-random"],
     queryFn: fetchRandomApods,
@@ -26,21 +26,18 @@ export default function APODDiscoverySidebarClient() {
   });
 
   return (
-    <div className="flex flex-col">
-      <Button variant={"ghost"} onClick={() => refetch()} disabled={isFetching}>
+    <div className="space-y-margin @container">
+      {/*<Button variant={"ghost"} onClick={() => refetch()} disabled={isFetching}>
         <RefreshCwIcon className={clsx({ "animate-spin": isFetching })} />
         <span>{isFetching ? "Fetching..." : "Refresh"}</span>
-      </Button>
+      </Button>*/}
 
-      <Separator />
-
-      {isPending ? (
-        Array.from({ length: 6 }).map((_, i) => (
-          <Skeleton key={i} className="aspect-3/2 border-b" />
-        ))
-      ) : (
-        <div className="flex flex-col">
-          {data?.ok &&
+      <div className="grid grid-cols-1 gap-x-gutter gap-y-group @xl:grid-cols-2 @5xl:grid-cols-3">
+        {isPending
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="aspect-3/2 border-b" />
+            ))
+          : data?.ok &&
             data.data.map((apod) => (
               <APODDiscoveryArticles
                 key={apod.date}
@@ -50,8 +47,7 @@ export default function APODDiscoverySidebarClient() {
                 image_url={apod.media_type === "image" ? apod.hdurl : undefined}
               />
             ))}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

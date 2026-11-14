@@ -41,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${interTight.variable} ${ibmPlexMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} ${interTight.variable} ${ibmPlexMono.variable} antialiased min-h-screen`}
       >
         <ReactQueryClientProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
@@ -49,10 +49,8 @@ export default function RootLayout({
               <Suspense fallback={null}>
                 <Header />
               </Suspense>
-              <div className="px-3 lg:px-8 flex-1 flex flex-col">
-                {children}
-              </div>
-              <Footer />
+              {children}
+              {/*<Footer />*/}
             </TooltipProvider>
           </ThemeProvider>
         </ReactQueryClientProvider>

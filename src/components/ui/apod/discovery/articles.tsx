@@ -24,26 +24,24 @@ export default function APODDiscoveryArticles({
 }: APODDiscoveryArticlesProps) {
   return (
     <Link href={`/apod/${date}`} className="group">
-      <article className="md:border-b space-y-3 pt-3 px-3 pb-8 not-md:group-not-last:border-b transition-colors">
+      <article className="space-y-snug">
         {image_url && (
-          <div className="relative aspect-video">
+          <div className="relative aspect-4/3 bg-muted">
             <Image
               fill
               src={image_url}
-              className="object-cover object-center"
+              className="object-contain object-center"
               loading="lazy"
               alt={title}
             />
           </div>
         )}
 
-        <div className="flex flex-col gap-4">
-          <span className="font-semibold group-hover:underline tracking-display-medium">
-            {title}
-          </span>
+        <div className="flex flex-col-reverse gap-gutter">
+          <h3 className="group-hover:underline">{title}</h3>
 
-          <div className="flex gap-1 flex-wrap">
-            <Badge variant="secondary">
+          {/*<div className="flex gap-1 flex-wrap">
+            <Badge variant="outline">
               {media_type === "image" ? (
                 <>
                   <RiFileImageLine />
@@ -62,11 +60,11 @@ export default function APODDiscoveryArticles({
               )}
             </Badge>
 
-            <Badge variant="secondary">
+            <Badge variant="outline">
               <RiCalendar2Line />
               <span>{format(parseISO(date), "do MMMM yyyy")}</span>
             </Badge>
-          </div>
+          </div>*/}
         </div>
       </article>
     </Link>

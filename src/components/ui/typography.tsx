@@ -16,7 +16,7 @@ export const PageEyebrow = React.forwardRef<HTMLParagraphElement, EyebrowProps>(
     <p
       ref={ref}
       className={cn(
-        "font-mono text-[0.65rem] lg:text-xs uppercase tracking-[0.35em] text-orange-500",
+        "font-mono text-xs md:text-sm uppercase text-orange-500",
         className,
       )}
       {...props}

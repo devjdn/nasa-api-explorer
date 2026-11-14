@@ -5,11 +5,9 @@ import parse, {
   type DOMNode,
   type HTMLReactParserOptions,
 } from "html-react-parser";
-import { Separator } from "../../separator";
 
 type ImageProps = {
   title: string;
-  date: string;
   credit?: string;
   copyright?: string;
   hdurl: string;
@@ -32,7 +30,7 @@ const creditOptions: HTMLReactParserOptions = {
           href={node.attribs.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-foreground underline underline-offset-4 hover:opacity-80"
+          className="text-foreground hover:opacity-80"
         >
           {domToReact(node.children as DOMNode[], creditOptions)}
         </a>
@@ -47,7 +45,6 @@ const creditOptions: HTMLReactParserOptions = {
 
 export default function APODMedia({
   title,
-  date,
   credit,
   copyright,
   hdurl,
@@ -57,18 +54,47 @@ export default function APODMedia({
   const creditText = credit ?? copyright;
 
   return (
-    <div className="w-full pb-8" data-component="media">
-      {/* ...media block unchanged... */}
+    <div className="w-full space-y-snug" data-component="media">
+      <div className="w-full aspect-3/2 relative bg-muted">
+        {media_type === "image" ? (
+          <Image
+            src={hdurl}
+            alt={title}
+            preload
+            fill
+            className="object-center object-contain"
+            placeholder="blur"
+            fetchPriority="high"
+            blurDataURL={hdurl}
+            unoptimized
+          />
+        ) : (
+          media_type === "video" &&
+          (isDirectVideo ? (
+            <video
+              controls
+              className="absolute inset-0 w-full h-full"
+              preload="metadata"
+            >
+              <source src={hdurl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <iframe
+              src={hdurl}
+              title={title}
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
+          ))
+        )}
+      </div>
 
-      <Separator className="mb-8" />
-
-      <div className="px-3 lg:px-8 space-y-4">
-        <div className="text-sm text-muted-foreground">
-          <span className="font-medium text-foreground/80">Credit: </span>
-          {creditText
-            ? parse(creditText, creditOptions)
-            : "No listed credit (may be visible in the media)"}
-        </div>
+      <div className="text-sm text-muted-foreground text-center max-w-2xl mx-auto w-full">
+        <span className="font-medium text-foreground/80">Credit: </span>
+        {creditText
+          ? parse(creditText, creditOptions)
+          : "No listed credit (may be visible in the media)"}
       </div>
     </div>
   );
