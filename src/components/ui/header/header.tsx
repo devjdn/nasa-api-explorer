@@ -12,13 +12,14 @@ export default function Header() {
   return (
     <header className="sticky top-0 flex justify-between items-center z-50 px-3 md:px-8 h-14 lg:grid md:grid-cols-[180px_1fr_180px] bg-background border-b">
       <div className="justify-self-start place-self-center">
-        <Link className="group" href={"/"}>
-          <div className="">
-            <p className="text-base font-mono uppercase font-medium">
-              Stargazer <span className="text-orange-500">1.0.1</span>
-            </p>
-          </div>
-        </Link>
+        <span className="font-mono uppercase font-medium">
+          <Link href="https://jdn.world" target="_blank">
+            <span>jdn.world/</span>
+          </Link>
+          <Link href={"/"}>
+            <span className="text-orange-500">Stargazer</span>
+          </Link>
+        </span>
       </div>
 
       <nav className="hidden md:flex place-self-center">

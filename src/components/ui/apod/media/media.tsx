@@ -58,7 +58,40 @@ export default function APODMedia({
 
   return (
     <div className="w-full pb-8" data-component="media">
-      {/* ...media block unchanged... */}
+      <div className="w-full aspect-3/2 relative">
+        {media_type === "image" ? (
+          <Image
+            src={hdurl}
+            alt={title}
+            preload
+            fill
+            className="object-center object-contain"
+            placeholder="blur"
+            fetchPriority="high"
+            blurDataURL={hdurl}
+            unoptimized
+          />
+        ) : (
+          media_type === "video" &&
+          (isDirectVideo ? (
+            <video
+              controls
+              className="absolute inset-0 w-full h-full"
+              preload="metadata"
+            >
+              <source src={hdurl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <iframe
+              src={hdurl}
+              title={title}
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+            />
+          ))
+        )}
+      </div>
 
       <Separator className="mb-8" />
 

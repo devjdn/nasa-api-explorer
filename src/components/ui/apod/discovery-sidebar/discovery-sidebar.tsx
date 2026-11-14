@@ -6,7 +6,7 @@ export default function APODDiscoverySidebar() {
   return (
     <div className="not-md:border-t md:border-l py-8 flex flex-col">
       <header className="px-3 pb-8">
-        <SubsectionTitle>Discover</SubsectionTitle>
+        <SubsectionTitle>Previous</SubsectionTitle>
       </header>
       <Separator />
       <APODDiscoverySidebarClient />
